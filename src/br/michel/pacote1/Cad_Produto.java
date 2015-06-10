@@ -3,11 +3,6 @@ package br.michel.pacote1;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-//import javafx.scene.control.ComboBox;
-
-
-
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -24,13 +19,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Cad_Produto extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtNome;
-	private JTextField txtDesc;
-	private JTextField txtValor;
+	
+	public JTextField txtNome;
+	public JTextField txtDesc;
+	public JTextField txtValor;
+	public JTextField txtQtd;
 	
 	String nome ; // Variavel na onde ficara o nome do Produto
 	String valor; // Variavel na onde ficara o valor do Produto
@@ -38,17 +36,61 @@ public class Cad_Produto extends JDialog {
 	String qtd;
 	int id; //  Variavel na onde ficara a FK de Grupo de Produto
 	
+	// VAR FOR EDIT
+	boolean edit = false;
+	int id_edit = 0;
+	
 	static Connection con = Conn.conectaMySQL();
 
-	Cad_GrupoProd grupoprod = new Cad_GrupoProd();
-	private JTextField txtQtd;
 
+	Cad_GrupoProd grupoprod = new Cad_GrupoProd();
+	
 	public void clickConecta() {
-		
-		String sql = "INSERT INTO `caqui`.`produtos` (`Nome`, `Valor`, `Quantidade`,  `Descricao`, `Grupo_Produtos_idGrupo_Produtos`) VALUES ('"+nome+"', '"+valor+"','"+qtd+"', '"+desc+"', '"+id+"')";
+		String sql;
+		if (edit == false){
+			 sql = "INSERT INTO `caqui`.`produtos` (`Nome`, `Valor`, `Quantidade`,  `Descricao`, `Grupo_Produtos_idGrupo_Produtos`) VALUES ('"+nome+"', '"+valor+"','"+qtd+"', '"+desc+"', '"+id+"')";
+		}else{
+			sql = "UPDATE `caqui`.`produtos` SET `Nome`='"+nome+"', `Valor`='"+valor+"', `Quantidade`='"+qtd+"', `Descricao`='"+desc+"', `Grupo_Produtos_idGrupo_Produtos`='"+id+"' WHERE `idProdutos`='"+id_edit+"'";
+		}
 		Conn.ConectaSql(sql);
 	}
 
+	public void editaProd(int id_Con){
+
+		String sql = "SELECT * FROM caqui.produtos WHERE `idProdutos`='"+id_Con+"'";
+		id_edit = id_Con;
+		edit = true;
+		try {
+			
+			ResultSet resposta = Conn.consulta( sql );
+	      
+	      while(resposta.next()){ 
+
+				//String id2 = Integer.toString(resposta.getInt( "produtos.idProdutos" )) ;
+				String umNome = resposta.getString( "produtos.Nome" );
+				String umaDesc = resposta.getString( "produtos.Descricao" );
+				String umValor = resposta.getString("produtos.Valor");
+				//String umGrupo = resposta.getString( "grupo_produtos.Nome" );
+				String qtd = resposta.getString("Quantidade");
+				
+				 txtNome.setText(umNome); 
+				 txtValor.setText(umValor); 
+				 txtDesc.setText(umaDesc); // Limpa o Campo
+				 txtQtd.setText(""+qtd);
+				 
+				 JOptionPane.showMessageDialog(null, "NOME CARAI "+umNome+" "+qtd);
+				 
+				
+				
+	          }
+	      } 
+	      catch(SQLException ex){
+	           System.out.println("SQLException: " + ex.getMessage());
+	           System.out.println("SQLState: " + ex.getSQLState());
+	           System.out.println("VendorError: " + ex.getErrorCode());
+	      }
+	}
+	
 	
 	public Cad_Produto() {
 		setTitle("Produtos");
@@ -133,10 +175,11 @@ public class Cad_Produto extends JDialog {
 						 
 						 clickConecta(); // Vai inserir as informaçoes para o Banco de Dados 
 						 
-						 txtNome.setText(""); // Limpa o Campo 
-						 txtValor.setText(""); // Limpa o Campo
-						 txtDesc.setText(""); // Limpa o Campo
-						 txtQtd.setText("");
+						 /* Limpa os Campos */
+						 txtNome.setText(""); 
+						 txtValor.setText(""); 
+						 txtDesc.setText(""); 
+						 txtQtd.setText(""); 
 					}
 				});
 				okButton.setActionCommand("OK");

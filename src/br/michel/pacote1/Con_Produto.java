@@ -102,7 +102,7 @@ public class Con_Produto extends JDialog {
 	 * Create the dialog.
 	 */
 	public Con_Produto() {
-		setBounds(100, 100, 570, 388);
+		setBounds(100, 100, 570, 418);
 		contentPanel.setBounds(0, 0, 0, 0);
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,11 +143,11 @@ public class Con_Produto extends JDialog {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(457, 327, 89, 23);
+		btnCancelar.setBounds(455, 351, 89, 23);
 		getContentPane().add(btnCancelar);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(16, 273, 397, 57);
+		panel.setBounds(16, 273, 256, 101);
 		getContentPane().add(panel);
 		
 		TitledBorder title;
@@ -164,7 +164,7 @@ public class Con_Produto extends JDialog {
 				
 			}
 		});
-		rbttGrupo.setBounds(6, 27, 65, 23);
+		rbttGrupo.setBounds(6, 51, 65, 23);
 		panel.add(rbttGrupo);
 		
 		rbttProduto = new JRadioButton("C\u00F3digo Produto");
@@ -175,7 +175,7 @@ public class Con_Produto extends JDialog {
 				rbttUltimo.setSelected( false );
 			}
 		});
-		 rbttProduto.setBounds(73, 27, 113, 23);
+		 rbttProduto.setBounds(6, 25, 113, 23);
 		panel.add(rbttProduto);
 		rbttUltimo = new JRadioButton("Ultimo Adicionado");
 		rbttUltimo.addActionListener(new ActionListener() {
@@ -186,7 +186,7 @@ public class Con_Produto extends JDialog {
 				
 			}
 		});
-		rbttUltimo.setBounds(188, 27, 131, 23);
+		rbttUltimo.setBounds(121, 25, 131, 23);
 		panel.add(rbttUltimo);
 		
 		JButton btnOk = new JButton("Ok");
@@ -214,13 +214,14 @@ public class Con_Produto extends JDialog {
 				
 			}
 		});
-		btnOk.setBounds(325, 25, 62, 23);
+		btnOk.setBounds(184, 67, 62, 23);
 		panel.add(btnOk);
 		
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				//Pega a Linha selecionada E apaga ela
 				int linhaSel = tabela.getSelectedRow();
 				int colunaSel = tabela.getSelectedColumn();
 				String dado = tabela.getValueAt(linhaSel, 0).toString();
@@ -229,10 +230,32 @@ public class Con_Produto extends JDialog {
 				Conn.ConectaSql(sql);
 				limpa_tabela();
 				atualiza();
+				
 			}
 		});
-		btnDeletar.setBounds(457, 293, 91, 23);
+		btnDeletar.setBounds(455, 317, 91, 23);
 		getContentPane().add(btnDeletar);
+		
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int linhaSel = tabela.getSelectedRow();
+				int colunaSel = tabela.getSelectedColumn();
+				int dado = Integer.parseInt(tabela.getValueAt(linhaSel, 0).toString());
+				JOptionPane.showMessageDialog(null, "DADO: "+dado);
+	
+				Cad_Produto produto = new Cad_Produto();
+				produto.editaProd(dado); 
+				produto.setModal(true);
+				produto.setVisible(true);
+				limpa_tabela();
+				atualiza();
+				
+			}
+		});
+		btnEditar.setBounds(455, 283, 91, 23);
+		getContentPane().add(btnEditar);
 		
 	}
 }
