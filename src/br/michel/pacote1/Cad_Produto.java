@@ -44,6 +44,7 @@ public class Cad_Produto extends JDialog {
 
 
 	Cad_GrupoProd grupoprod = new Cad_GrupoProd();
+	private JComboBox comboBox;
 	
 	public void clickConecta() {
 		String sql;
@@ -60,6 +61,8 @@ public class Cad_Produto extends JDialog {
 		String sql = "SELECT * FROM caqui.produtos WHERE `idProdutos`='"+id_Con+"'";
 		id_edit = id_Con;
 		edit = true;
+		comboBox.setSelectedIndex( id_Con );
+		
 		try {
 			
 			ResultSet resposta = Conn.consulta( sql );
@@ -70,7 +73,7 @@ public class Cad_Produto extends JDialog {
 				String umNome = resposta.getString( "produtos.Nome" );
 				String umaDesc = resposta.getString( "produtos.Descricao" );
 				String umValor = resposta.getString("produtos.Valor");
-				//String umGrupo = resposta.getString( "grupo_produtos.Nome" );
+				String umGrupo = resposta.getString( "produtos.Grupo_Produtos_idGrupo_Produtos" );
 				String qtd = resposta.getString("Quantidade");
 				
 				 txtNome.setText(umNome); 
@@ -113,7 +116,7 @@ public class Cad_Produto extends JDialog {
 		lblGrupo.setBounds(10, 56, 46, 14);
 		contentPanel.add(lblGrupo);
 		
-		final JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setEditable(true);
 		comboBox.setBounds(10, 70, 107, 20);
 		contentPanel.add(comboBox);
@@ -125,6 +128,7 @@ public class Cad_Produto extends JDialog {
 				grupoprod.setVisible(true);
 				comboBox.removeAllItems(); 
 				Control.Click(comboBox,"grupo_produtos" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+				
 			}
 		});
 		button.setBounds(120, 71, 25, 20);

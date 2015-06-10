@@ -9,7 +9,18 @@ public class Item{
 	       this.id = id;  
 	       this.nome = nome;  
 	   }  
-	  
+	   
+	   public int getId(){
+			
+			return id;
+			
+		}
+		
+		public String getName(){
+			
+			return nome;
+			
+		}
 	  
 	   @Override  
 	   public String toString(){  
