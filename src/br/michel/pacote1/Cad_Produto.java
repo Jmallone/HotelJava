@@ -114,6 +114,7 @@ public class Cad_Produto extends JDialog {
 		contentPanel.add(lblGrupo);
 		
 		final JComboBox comboBox = new JComboBox();
+		comboBox.setEditable(true);
 		comboBox.setBounds(10, 70, 107, 20);
 		contentPanel.add(comboBox);
 		
