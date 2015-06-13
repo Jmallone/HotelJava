@@ -61,7 +61,8 @@ public class Cad_Produto extends JDialog {
 		String sql = "SELECT * FROM caqui.produtos WHERE `idProdutos`='"+id_Con+"'";
 		id_edit = id_Con;
 		edit = true;
-		comboBox.setSelectedIndex( id_Con );
+		comboBox.removeAllItems(); 
+		Control.Click(comboBox,"grupo_produtos" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
 		
 		try {
 			
@@ -73,7 +74,8 @@ public class Cad_Produto extends JDialog {
 				String umNome = resposta.getString( "produtos.Nome" );
 				String umaDesc = resposta.getString( "produtos.Descricao" );
 				String umValor = resposta.getString("produtos.Valor");
-				String umGrupo = resposta.getString( "produtos.Grupo_Produtos_idGrupo_Produtos" );
+				//String umGrupo = resposta.getString( "produtos.Grupo_Produtos_idGrupo_Produtos" );
+				int umGrupo = resposta.getInt( "produtos.Grupo_Produtos_idGrupo_Produtos" ) ;
 				String qtd = resposta.getString("Quantidade");
 				
 				 txtNome.setText(umNome); 
@@ -81,9 +83,7 @@ public class Cad_Produto extends JDialog {
 				 txtDesc.setText(umaDesc); // Limpa o Campo
 				 txtQtd.setText(""+qtd);
 				 
-				 JOptionPane.showMessageDialog(null, "NOME CARAI "+umNome+" "+qtd);
-				 
-				
+				 JOptionPane.showMessageDialog(null, "NOME "+umNome+" "+qtd+" \n GRUPO "+umGrupo);
 				
 	          }
 	      } 
@@ -92,6 +92,7 @@ public class Cad_Produto extends JDialog {
 	           System.out.println("SQLState: " + ex.getSQLState());
 	           System.out.println("VendorError: " + ex.getErrorCode());
 	      }
+		
 	}
 	
 	

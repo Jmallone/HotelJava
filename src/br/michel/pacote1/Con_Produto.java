@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.ImageIcon;
 
 public class Con_Produto extends JDialog {
 
@@ -59,6 +60,7 @@ public class Con_Produto extends JDialog {
     public void atualiza()
     {
 		String sql = "SELECT produtos.idProdutos, produtos.Nome, produtos.Descricao, produtos.Valor, grupo_produtos.Nome, Quantidade FROM produtos LEFT JOIN grupo_produtos ON idGrupo_Produtos=Grupo_Produtos_idGrupo_Produtos "+ordem+";";		
+		
 		try {
 			
 			ResultSet resposta = Conn.consulta( sql );
@@ -143,7 +145,7 @@ public class Con_Produto extends JDialog {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(455, 351, 89, 23);
+		btnCancelar.setBounds(282, 368, 264, 23);
 		getContentPane().add(btnCancelar);
 		
 		JPanel panel = new JPanel();
@@ -218,6 +220,7 @@ public class Con_Produto extends JDialog {
 		panel.add(btnOk);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.setIcon(new ImageIcon("C:\\Users\\IFPR\\Desktop\\excluir.png"));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -233,10 +236,11 @@ public class Con_Produto extends JDialog {
 				
 			}
 		});
-		btnDeletar.setBounds(455, 317, 91, 23);
+		btnDeletar.setBounds(282, 326, 264, 32);
 		getContentPane().add(btnDeletar);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setIcon(new ImageIcon("C:\\Users\\IFPR\\Desktop\\editar.png"));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -254,7 +258,7 @@ public class Con_Produto extends JDialog {
 				
 			}
 		});
-		btnEditar.setBounds(455, 283, 91, 23);
+		btnEditar.setBounds(282, 283, 264, 32);
 		getContentPane().add(btnEditar);
 		
 	}
