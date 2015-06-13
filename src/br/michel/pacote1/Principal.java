@@ -40,6 +40,7 @@ public class Principal extends JFrame {
 	Con_Produto con_Produto = new Con_Produto();
 	Con_Cidade Con_Cidade = new Con_Cidade();
 	Con_Cliente con_cliente = new Con_Cliente();
+	Con_Quartos con_quartos = new Con_Quartos();
 
 	/**
 	 * Create the frame.
@@ -209,6 +210,12 @@ public class Principal extends JFrame {
 		mnConsultas.add(mntmHospede);
 		
 		JMenuItem mntmDisponibilidadesDeQuartos = new JMenuItem("Disponibilidades de Quartos");
+		mntmDisponibilidadesDeQuartos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				con_quartos.setModal(true);
+				con_quartos.setVisible(true);
+			}
+		});
 		mnConsultas.add(mntmDisponibilidadesDeQuartos);
 		
 		JMenu mnRelatorios = new JMenu("Relatorios");
