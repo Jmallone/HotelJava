@@ -30,6 +30,7 @@ public class Principal extends JFrame {
 	public Cad_Funcionario funcionario = new Cad_Funcionario();
 	Cad_Quartos quarto = new Cad_Quartos();
 	Cad_GrupoProd grupoprod = new Cad_GrupoProd();
+	Painel_Reserva telareservas = new Painel_Reserva();
 	Cad_Reservas reservas = new Cad_Reservas();
 	Cad_Saida saida = new Cad_Saida();
 	Cad_Entrada entrada = new Cad_Entrada();
@@ -41,6 +42,7 @@ public class Principal extends JFrame {
 	Con_Cidade Con_Cidade = new Con_Cidade();
 	Con_Cliente con_cliente = new Con_Cliente();
 	Con_Quartos con_quartos = new Con_Quartos();
+	Cad_TipoQuarto tipoQuarto = new Cad_TipoQuarto();
 
 	/**
 	 * Create the frame.
@@ -85,6 +87,15 @@ public class Principal extends JFrame {
 				cliente.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmTipoDeQuarto = new JMenuItem("Tipo de Quarto");
+		mntmTipoDeQuarto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tipoQuarto.setModal(true);
+				tipoQuarto.setVisible(true);
+			}
+		});
+		mnCadastros.add(mntmTipoDeQuarto);
 		mntmCliente.setIcon(new ImageIcon("C:\\Users\\IFPR\\Desktop\\icon-ios7-people-20.png"));
 		mnCadastros.add(mntmCliente);
 		
@@ -135,6 +146,8 @@ public class Principal extends JFrame {
 		mnMovimentao.add(mntmReservas);
 		mntmReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				telareservas.setModal(true);
+				telareservas.setVisible(true);
 				reservas.setModal(true);
 				reservas.setVisible(true);
 			}
@@ -216,6 +229,9 @@ public class Principal extends JFrame {
 				con_quartos.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmQuartos_1 = new JMenuItem("Quartos");
+		mnConsultas.add(mntmQuartos_1);
 		mnConsultas.add(mntmDisponibilidadesDeQuartos);
 		
 		JMenu mnRelatorios = new JMenu("Relatorios");

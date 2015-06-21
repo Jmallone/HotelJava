@@ -69,7 +69,6 @@ public class Cad_Produto extends JDialog {
 			ResultSet resposta = Conn.consulta( sql );
 	      
 	      while(resposta.next()){ 
-
 				//String id2 = Integer.toString(resposta.getInt( "produtos.idProdutos" )) ;
 				String umNome = resposta.getString( "produtos.Nome" );
 				String umaDesc = resposta.getString( "produtos.Descricao" );
@@ -205,4 +204,12 @@ public class Cad_Produto extends JDialog {
 			}
 		}
 	}
+
+	@Override
+	public void setVisible(boolean b){
+		Control.Click(comboBox,"grupo_produtos" );// Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+		super.setVisible(b);
+	}
+	
+
 }

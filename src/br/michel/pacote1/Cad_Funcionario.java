@@ -60,6 +60,7 @@ public class Cad_Funcionario extends JDialog {
 	}
 	
 	Cad_Cidade cidade = new Cad_Cidade();
+	private JComboBox cbCidade;
 
 	/**
 	 * Create the dialog.
@@ -130,7 +131,7 @@ public class Cad_Funcionario extends JDialog {
 		lblCidade.setBounds(10, 195, 46, 14);
 		contentPanel.add(lblCidade);
 		
-		final JComboBox cbCidade = new JComboBox();
+		cbCidade = new JComboBox();
 		cbCidade.setBounds(10, 209, 127, 20);
 		contentPanel.add(cbCidade);
 		Control.Click(cbCidade,"cidade" );
@@ -140,6 +141,7 @@ public class Cad_Funcionario extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				cidade.setModal(true);
 				cidade.setVisible(true);
+				Control.Click(cbCidade,"cidade" );
 			}
 		});
 		button.setBounds(142, 210, 25, 20);
@@ -205,6 +207,7 @@ public class Cad_Funcionario extends JDialog {
 		contentPanel.add(lblDataAdmisso);
 		
 		txtADM = new JTextField();
+		txtADM.setText("2015-12-30");
 		txtADM.setColumns(10);
 		txtADM.setBounds(10, 437, 84, 20);
 		contentPanel.add(txtADM);
@@ -292,5 +295,10 @@ public class Cad_Funcionario extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	@Override
+	public void setVisible(boolean b){
+		Control.Click(cbCidade,"cidade" );
+		super.setVisible(b);
 	}
 }

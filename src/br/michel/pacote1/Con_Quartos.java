@@ -14,10 +14,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.Connection;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Con_Quartos extends JDialog {
 
@@ -27,6 +30,7 @@ public class Con_Quartos extends JDialog {
     static JTable tabela = new JTable(modelo);
 	static Connection con = Conn.conectaMySQL();
 	private JTextField textField;
+	private JComboBox comboBox;
 	
 	
 	public Con_Quartos() {
@@ -86,7 +90,7 @@ public class Con_Quartos extends JDialog {
 		lblConsultarData.setBounds(11, 11, 185, 14);
 		getContentPane().add(lblConsultarData);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(157, 27, 107, 20);
 		getContentPane().add(comboBox);
 		
@@ -99,7 +103,16 @@ public class Con_Quartos extends JDialog {
 		getContentPane().add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
 		btnCancelar.setBounds(455, 341, 89, 23);
 		getContentPane().add(btnCancelar);
+	}
+	public void setVisible(boolean b){
+		Control.Click(comboBox,"tipoquarto" );
+		super.setVisible(b);
 	}
 }

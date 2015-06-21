@@ -104,7 +104,7 @@ public class Con_Produto extends JDialog {
 	 * Create the dialog.
 	 */
 	public Con_Produto() {
-		setBounds(100, 100, 570, 418);
+		setBounds(100, 100, 570, 438);
 		contentPanel.setBounds(0, 0, 0, 0);
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

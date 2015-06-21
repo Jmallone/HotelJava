@@ -30,6 +30,7 @@ public class Cad_Cidade extends JDialog {
 	String nome;
 	String cep;
 	int id;
+	private JComboBox cbBoxEstado;
 	public void clickConecta() {
 		
 		String sql = "INSERT INTO `caqui`.`cidade` (`Nome`, `Estado_idEstado`) VALUES ('"+nome+"', '"+id+"')";
@@ -58,7 +59,7 @@ public class Cad_Cidade extends JDialog {
 			contentPanel.add(txtNome);
 			txtNome.setColumns(10);
 
-			final JComboBox cbBoxEstado = new JComboBox();
+			cbBoxEstado = new JComboBox();
 			cbBoxEstado.setBounds(10, 76, 110, 20);
 			contentPanel.add(cbBoxEstado);
 			
@@ -116,4 +117,11 @@ public class Cad_Cidade extends JDialog {
 			}
 		}
 	}
+	
+	@Override
+	public void setVisible(boolean b){
+		Control.Click(cbBoxEstado, "Estado");
+		super.setVisible(b);
+	}
+	
 }

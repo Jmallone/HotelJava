@@ -36,24 +36,142 @@ public class Cad_Cliente extends JDialog {
 	String Nome, Email, Bairro,Logradouro, RG, CPF, Telefone, Celular, Numero, CEP;
 	int id, id_end; // ID_END SERÁ O ID DO ENDEREÇO 
 	
+	
+	// VAR FOR EDIT
+	boolean edit = false;
+	int id_edit = 0;
+	
 	public void clickEndereco(){
 		
-		String sql = "INSERT INTO `caqui`.`endereco` (`Numero`, `Bairro`, `CEP`, `Logradouro`, `Cidade_idCidade`) VALUES"
-				+ " ('"+Numero+"', '"+Bairro+"', '"+CEP+"', '"+Logradouro+"', '"+id+"')";
+		String sql = null;
+		
+		//TODO: Fazer com que o programa pegue as informaçoes do Endereço também
+		//if (edit == false){
+			sql = "INSERT INTO `caqui`.`endereco` (`Numero`, `Bairro`, `CEP`, `Logradouro`, `Cidade_idCidade`) VALUES"
+					+ " ('"+Numero+"', '"+Bairro+"', '"+CEP+"', '"+Logradouro+"', '"+id+"')";
+		//}else{
+			//sql = "UPDATE `caqui`.`produtos` SET `Nome`='"+nome+"', `Valor`='"+valor+"', `Quantidade`='"+qtd+"', `Descricao`='"+desc+"', `Grupo_Produtos_idGrupo_Produtos`='"+id+"' WHERE `idProdutos`='"+id_edit+"'";
+	//}
+		
 		Conn.ConectaSql(sql);
 		
 	}
 	
 	public void clickHospede() {
 		
-		String sql = "INSERT INTO `caqui`.`hospede` (`Nome`, `RG`, `CPF`, `Telefone`, `Celular`, `Email`, `Endereco_idEndereco`)"
-				+ " VALUES ('"+Nome+"', '"+RG+"', '"+CPF+"', '"+Telefone+"', '"+Celular+"', '"+Email+"', '"+id_end+"')";
+		String sql = null;
+		
+		if (edit == false){
+			sql = "INSERT INTO `caqui`.`hospede` (`Nome`, `RG`, `CPF`, `Telefone`, `Celular`, `Email`, `Endereco_idEndereco`)"
+					+ " VALUES ('"+Nome+"', '"+RG+"', '"+CPF+"', '"+Telefone+"', '"+Celular+"', '"+Email+"', '"+id_end+"')";
+		}else{
+			sql = "UPDATE `caqui`.`hospede` SET `Nome`='"+Nome+"', `RG`='"+RG+"', `CPF`='"+CPF+"', `Telefone`='"+Telefone+"', `Celular`='"+Celular+"', `Email`='"+Email+"' WHERE `idHospede`='1'";
+		}
+		
 		Conn.ConectaSql(sql);
 	}
 
-	/**
-	 * Create the dialog.
-	 */
+	
+	
+	
+
+
+	public void editaEnd(int id_Con){
+
+		String sql = "SELECT * FROM caqui.hospede WHERE `idhospede`='"+id_Con+"'";
+		
+		//SELECT * FROM endereco WHERE idEndereco = 1;
+		
+		id_edit = id_Con;
+		edit = true;
+		comboBox.removeAllItems(); 
+		Control.Click(comboBox,"cidade" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+		
+		try {
+			
+			ResultSet resposta = Conn.consulta( sql );
+	      
+	      while(resposta.next()){ 
+	    	 // idHospede, Nome, RG, CPF, Telefone, Celular, Email, Endereco_idEndereco, idHospede, id
+				//String id2 = Integer.toString(resposta.getInt( "produtos.idProdutos" )) ;
+				String umNome = resposta.getString( "hospede.Nome" );
+				String umRG = resposta.getString("hospede.RG");
+				String umCPF = resposta.getString("hospede.CPF");
+				String umTel = resposta.getString("hospede.Telefone");
+				String umCel = resposta.getString("hospede.Celular");
+				String umEmail = resposta.getString("hospede.Email");
+				
+				txtNome.setText(umNome);
+				txtCPF.setText(umCPF);
+				txtRG.setText(umRG);
+				txtTelefone.setText(umTel);
+				txtCelular.setText(umCel);
+				txtEmail.setText(umEmail);
+				txtBairro.setText("");
+				txtRua.setText("");
+				txtNumero.setText("");
+				 
+				
+				
+	          }
+	      } 
+	      catch(SQLException ex){
+	           System.out.println("SQLException: " + ex.getMessage());
+	           System.out.println("SQLState: " + ex.getSQLState());
+	           System.out.println("VendorError: " + ex.getErrorCode());
+	      }
+		
+	}
+	
+	
+	
+
+	public void editaHosp(int id_Con){
+
+		String sql = "SELECT * FROM caqui.hospede WHERE `idhospede`='"+id_Con+"'";
+		id_edit = id_Con;
+		edit = true;
+		comboBox.removeAllItems(); 
+		Control.Click(comboBox,"cidade" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+		
+		try {
+			
+			ResultSet resposta = Conn.consulta( sql );
+	      
+	      while(resposta.next()){ 
+	    	 // idHospede, Nome, RG, CPF, Telefone, Celular, Email, Endereco_idEndereco, idHospede, id
+				//String id2 = Integer.toString(resposta.getInt( "produtos.idProdutos" )) ;
+				String umNome = resposta.getString( "hospede.Nome" );
+				String umRG = resposta.getString("hospede.RG");
+				String umCPF = resposta.getString("hospede.CPF");
+				String umTel = resposta.getString("hospede.Telefone");
+				String umCel = resposta.getString("hospede.Celular");
+				String umEmail = resposta.getString("hospede.Email");
+				
+				txtNome.setText(umNome);
+				txtCPF.setText(umCPF);
+				txtRG.setText(umRG);
+				txtTelefone.setText(umTel);
+				txtCelular.setText(umCel);
+				txtEmail.setText(umEmail);
+				txtBairro.setText("");
+				txtRua.setText("");
+				txtNumero.setText("");
+				 
+				
+				
+	          }
+	      } 
+	      catch(SQLException ex){
+	           System.out.println("SQLException: " + ex.getMessage());
+	           System.out.println("SQLState: " + ex.getSQLState());
+	           System.out.println("VendorError: " + ex.getErrorCode());
+	      }
+		
+	}
+	
+	
+	
 	public Cad_Cliente() {
 		setTitle("Cliente");
 		setBounds(100, 100, 365, 388);

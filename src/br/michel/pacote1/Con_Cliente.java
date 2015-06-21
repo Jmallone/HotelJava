@@ -50,7 +50,7 @@ public class Con_Cliente extends JDialog {
     
     public void atualiza()
     {
-		String sql = "SELECT hospede.idHospede, hospede.Nome, endereco.Logradouro, cidade.Nome, estado.Nome , hospede.Email, hospede.Telefone, hospede.Celular "
+		String sql = "SELECT hospede.idHospede, hospede.Nome, endereco.Logradouro, cidade.Nome, estado.Nome , hospede.Email, hospede.Telefone, hospede.Celular, Endereco_idEndereco "
 				+ "FROM hospede "
 				+ "LEFt JOIN endereco ON idHospede = idEndereco "
 				+ "Left join cidade ON Cidade_idCidade=idCidade "
@@ -72,7 +72,9 @@ public class Con_Cliente extends JDialog {
 					String umEmail = resposta.getString("hospede.Email");
 					String umTelefone = resposta.getString("hospede.Telefone");
 					String umCelular = resposta.getString("hospede.Celular");
+					int id = resposta.getInt("Endereco_idEndereco");
 					modelo.addRow( new Object[]{id2 , umNome, umaRua, umaCity, umEstado, umEmail, umTelefone, umCelular});
+					new teste(id);
 					
 	      	}   
 	      } 
@@ -84,7 +86,7 @@ public class Con_Cliente extends JDialog {
     }
     
 	public Con_Cliente() {
-		setBounds(100, 100, 541, 333);
+		setBounds(100, 100, 541, 376);
 		
 		contentPanel.setBounds(0, 0, 0, 0);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -216,6 +218,49 @@ public class Con_Cliente extends JDialog {
 		});
 		btnNewButton.setBounds(218, 12, 70, 20);
 		panel.add(btnNewButton);
+		
+		JButton button = new JButton("Editar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int linhaSel = tabela.getSelectedRow();
+				int colunaSel = tabela.getSelectedColumn();
+				int dado = Integer.parseInt(tabela.getValueAt(linhaSel, 0).toString());
+				JOptionPane.showMessageDialog(null, "DADO: "+dado);
+	
+				Cad_Cliente clie = new Cad_Cliente();
+				clie.editaHosp(dado); 
+				clie.setModal(true);
+				clie.setVisible(true);
+				
+				limpa_tabela();
+				atualiza();
+				
+			}
+		});
+		button.setBounds(330, 211, 185, 32);
+		contentPanel.add(button);
+		
+		JButton button_1 = new JButton("Deletar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+
+				/*
+				//Pega a Linha selecionada E apaga ela
+				int linhaSel = tabela.getSelectedRow();
+				int colunaSel = tabela.getSelectedColumn();
+				String dado = tabela.getValueAt(linhaSel, 0).toString();
+				JOptionPane.showMessageDialog(null, "Dado: "+dado);
+				String sql ="DELETE FROM `caqui`.`hospede` WHERE `idHospede`='"+dado+"'";
+				Conn.ConectaSql(sql);
+				limpa_tabela();
+				atualiza();*/
+				
+			}
+		});
+		button_1.setBounds(330, 254, 185, 32);
+		contentPanel.add(button_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

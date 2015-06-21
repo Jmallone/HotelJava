@@ -5,56 +5,52 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Cad_TipoQuarto extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtTipo;
+	private JTextField txtDesc;
+	private JTextField txtValor;
+	String Tipo, Desc, Valor;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Cad_TipoQuarto dialog = new Cad_TipoQuarto();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void clickConecta() {
+		
+		String sql = "INSERT INTO `caqui`.`tipoquarto` (`Nome`, `Descricao`, `Valor`) VALUES ('"+Tipo+"', '"+Desc+"', '"+Valor+"')";
+		
+		Conn.ConectaSql(sql);
 	}
-
-	/**
-	 * Create the dialog.
-	 */
+	
 	public Cad_TipoQuarto() {
-		setBounds(100, 100, 154, 300);
+		setBounds(100, 100, 154, 229);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 28, 126, 20);
-		contentPanel.add(textField);
-		textField.setColumns(10);
+		txtTipo = new JTextField();
+		txtTipo.setBounds(10, 28, 126, 20);
+		contentPanel.add(txtTipo);
+		txtTipo.setColumns(10);
 		{
-			textField_1 = new JTextField();
-			textField_1.setBounds(10, 78, 126, 20);
-			contentPanel.add(textField_1);
-			textField_1.setColumns(10);
+			txtDesc = new JTextField();
+			txtDesc.setBounds(10, 78, 126, 20);
+			contentPanel.add(txtDesc);
+			txtDesc.setColumns(10);
 		}
 		{
-			textField_2 = new JTextField();
-			textField_2.setBounds(10, 127, 60, 20);
-			contentPanel.add(textField_2);
-			textField_2.setColumns(10);
+			txtValor = new JTextField();
+			txtValor.setBounds(10, 127, 60, 20);
+			contentPanel.add(txtValor);
+			txtValor.setColumns(10);
 		}
 		{
 			JLabel lblTipo = new JLabel("TIPO");
@@ -77,12 +73,31 @@ public class Cad_TipoQuarto extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						Tipo = txtTipo.getText();
+						Desc = txtDesc.getText();
+						Valor = txtValor.getText();
+
+						clickConecta();
+						txtTipo.setText("");
+						txtDesc.setText("");
+						txtValor.setText("");
+
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						setVisible(false);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
