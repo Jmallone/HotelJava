@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.michel.modelo.ModelEndereco;
-import br.michel.modelo.ModelFuncionario;
-import br.michel.modelo.ModelHospede;
 
 //Address Inserts
 public class EnderecoDao {

@@ -1,5 +1,6 @@
 package br.michel.modelo;
 
+//Model comboBox
 public class ModelCombo {
 
 	public int id;

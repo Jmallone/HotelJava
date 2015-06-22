@@ -10,8 +10,7 @@ public class ComboDao {
 
 	Coon Con = new Coon();
 		 
-
-	// pega a Fk do comboBox e retorna
+	//Get FK ComboBox and return
 	public int FkRadio(JComboBox<?> comboBox){ 
 		
 		ModelCombo i = (ModelCombo) comboBox.getSelectedItem();  
@@ -26,7 +25,7 @@ public class ComboDao {
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()){
-				//Criando o objeto 
+				//Creating object 
 				int id = rs.getInt("id"+tabela);  
 		        String nome = rs.getString("Nome");  
 		        comboBox.addItem(new ModelCombo(id,nome));
