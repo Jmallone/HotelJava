@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import br.michel.dao.ComboDao;
 import br.michel.dao.EnderecoDao;
 import br.michel.dao.HospedeDao;
+import br.michel.modelo.ModelCombo;
 import br.michel.modelo.ModelEndereco;
 import br.michel.modelo.ModelHospede;
 
@@ -21,6 +22,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CadHospede extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtRG;
@@ -39,6 +44,7 @@ public class CadHospede extends JDialog {
 	ModelEndereco modelEndereco = new ModelEndereco();
 	
 	private JTextField txtCEP;
+	private JComboBox<ModelCombo> cboxCidade;
 	
 	public static void main(String[] args) {
 		try {
@@ -138,7 +144,7 @@ public class CadHospede extends JDialog {
 		txtBairro.setBounds(184, 233, 149, 20);
 		panel.add(txtBairro);
 		
-		final JComboBox cboxCidade = new JComboBox();
+		cboxCidade = new JComboBox<ModelCombo>();
 		cboxCidade.setBounds(10, 233, 130, 20);
 		panel.add(cboxCidade);
 		//Refresh ComboBox

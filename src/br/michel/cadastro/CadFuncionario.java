@@ -1,7 +1,6 @@
 package br.michel.cadastro;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,6 +15,7 @@ import javax.swing.border.EtchedBorder;
 import br.michel.dao.ComboDao;
 import br.michel.dao.EnderecoDao;
 import br.michel.dao.FuncionarioDao;
+import br.michel.modelo.ModelCombo;
 import br.michel.modelo.ModelEndereco;
 import br.michel.modelo.ModelFuncionario;
 
@@ -24,6 +24,10 @@ import java.awt.event.ActionEvent;
 
 public class CadFuncionario extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNome;
 	private JTextField txtCPF;
@@ -48,7 +52,7 @@ public class CadFuncionario extends JDialog {
 	ModelFuncionario modelFuncionario = new ModelFuncionario();
 	ModelEndereco modelEndereco = new ModelEndereco();
 	
-	private JComboBox cboxCidade;
+	private JComboBox<ModelCombo> cboxCidade;
 	
 	public static void main(String[] args) {
 		try {
@@ -147,7 +151,7 @@ public class CadFuncionario extends JDialog {
 				panel.add(label);
 			}
 			{
-				cboxCidade = new JComboBox();
+				cboxCidade = new JComboBox<ModelCombo>();
 				cboxCidade.setBounds(10, 209, 127, 20);
 				panel.add(cboxCidade);
 				//Refresh ComboBox

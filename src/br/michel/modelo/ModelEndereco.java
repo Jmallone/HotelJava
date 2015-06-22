@@ -1,5 +1,6 @@
 package br.michel.modelo;
 
+//Model for Address
 public class ModelEndereco {
 	String Bairro, Numero, Logradouro, CEP;
 	int idCidade;

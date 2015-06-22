@@ -8,6 +8,7 @@ import br.michel.modelo.ModelEndereco;
 import br.michel.modelo.ModelFuncionario;
 import br.michel.modelo.ModelHospede;
 
+//Address Inserts
 public class EnderecoDao {
 
 	Coon Con = new Coon();
@@ -23,14 +24,14 @@ public class EnderecoDao {
 		try{
 			PreparedStatement stmt = Con.Conecta().prepareStatement(sql);
 			
-			//seta os valores
+			//Set values
 			stmt.setString(1, ModelEndereco.getNumero());
 			stmt.setString(2, ModelEndereco.getBairro());
 			stmt.setString(3, ModelEndereco.getCEP());
 			stmt.setString(4, ModelEndereco.getLogradouro());
 			stmt.setLong(5, ModelEndereco.getIdCidade());
 
-			//executa
+			//execute and close
 			stmt.execute();
 			stmt.close();
 		}catch (SQLException e){
@@ -39,7 +40,7 @@ public class EnderecoDao {
 		
 	}
 	
-	//Pega o ultimo id cadastrado na tabela Endereço e retorna
+	// Get the last id on table Address and return
 	public int ultimoID(){
 		int ids = 0;
 		try {

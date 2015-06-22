@@ -1,5 +1,6 @@
 package br.michel.modelo;
 
+//Model for Staff
 public class ModelFuncionario {
 	String Nome, Email, Bairro,Logradouro, RG, CPF, Telefone, Celular, Numero, CEP, Funcao, Admissao, Demissao, Motivo;
 	int id, id_end;
