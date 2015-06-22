@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import br.michel.dao.ComboDao;
+import br.michel.dao.EnderecoDao;
 import br.michel.dao.HospedeDao;
 import br.michel.modelo.ModelHospede;
 
@@ -29,8 +30,12 @@ public class CadHospede extends JDialog {
 	private JTextField txtLogradouro;
 	private JTextField txtNum;
 
+	//Create Objects 
 	ComboDao comboDao = new ComboDao();
-	HospedeDao dao = new HospedeDao();
+	EnderecoDao endDao = new EnderecoDao();
+	HospedeDao hospdao = new HospedeDao();
+	ModelHospede modelHospede = new ModelHospede();
+	
 	
 	private JTextField txtCEP;
 	
@@ -135,6 +140,7 @@ public class CadHospede extends JDialog {
 		final JComboBox cboxCidade = new JComboBox();
 		cboxCidade.setBounds(10, 233, 130, 20);
 		panel.add(cboxCidade);
+		//Atualiza ComboBox
 		comboDao.AtualizaCombo(cboxCidade, "cidade");
 		
 		JButton button = new JButton("...");
@@ -161,11 +167,6 @@ public class CadHospede extends JDialog {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
-				//gravar 
-				ModelHospede modelHospede = new ModelHospede();
-				
 				//Grava Endereço
 				modelHospede.setBairro(txtBairro.getText());
 				modelHospede.setNumero(txtNum.getText());
@@ -174,10 +175,9 @@ public class CadHospede extends JDialog {
 				modelHospede.setId(comboDao.FkRadio(cboxCidade)); // Pega a ID do ComboBox cidade
 				
 				//insere o endereço
-				dao.adicionaEndereco(modelHospede);
+				endDao.adicionaEndereco(modelHospede);
 				
-				
-				
+
 				//Grava o Hospede
 				modelHospede.setNome(txtNome.getText());
 				modelHospede.setRG(txtRG.getText());
@@ -186,10 +186,10 @@ public class CadHospede extends JDialog {
 				modelHospede.setCelular(txtCel.getText());
 				modelHospede.setEmail(txtEmail.getText());
 				//Pega o ultimo ID do registro de endereco
-				modelHospede.setId_end(dao.ultimoID());
+				modelHospede.setId_end(endDao.ultimoID());
 				
 				//Insere o hospede na tabela
-				dao.adicionaHospede(modelHospede);
+				hospdao.adicionaHospede(modelHospede);
 				
 
 			}

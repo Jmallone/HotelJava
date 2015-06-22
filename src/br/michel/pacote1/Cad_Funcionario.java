@@ -37,7 +37,7 @@ public class Cad_Funcionario extends JDialog {
 	private JTextField txtDEM;
 	
 	String Nome, Email, Bairro,Logradouro, RG, CPF, Telefone, Celular, Numero, CEP, Funcao, Admissao, Demissao, Motivo;
-	int id, id_end, Nasci, Carteira; // ID_END SERÁ O ID DO ENDEREÇO 
+	int id, id_end, Nasci, Carteira; 
 	
 	public void clickEndereco(){
 		
