@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import br.michel.dao.ComboDao;
 import br.michel.dao.EnderecoDao;
 import br.michel.dao.HospedeDao;
+import br.michel.modelo.ModelEndereco;
 import br.michel.modelo.ModelHospede;
 
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class CadHospede extends JDialog {
 	EnderecoDao endDao = new EnderecoDao();
 	HospedeDao hospdao = new HospedeDao();
 	ModelHospede modelHospede = new ModelHospede();
-	
+	ModelEndereco modelEndereco = new ModelEndereco();
 	
 	private JTextField txtCEP;
 	
@@ -140,7 +141,7 @@ public class CadHospede extends JDialog {
 		final JComboBox cboxCidade = new JComboBox();
 		cboxCidade.setBounds(10, 233, 130, 20);
 		panel.add(cboxCidade);
-		//Atualiza ComboBox
+		//Refresh ComboBox
 		comboDao.AtualizaCombo(cboxCidade, "cidade");
 		
 		JButton button = new JButton("...");
@@ -167,28 +168,27 @@ public class CadHospede extends JDialog {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//Grava Endereço
-				modelHospede.setBairro(txtBairro.getText());
-				modelHospede.setNumero(txtNum.getText());
-				modelHospede.setLogradouro(txtLogradouro.getText());
-				modelHospede.setCEP(txtCEP.getText());
-				modelHospede.setId(comboDao.FkRadio(cboxCidade)); // Pega a ID do ComboBox cidade
+				//Inserts Address
+				modelEndereco.setBairro(txtBairro.getText());
+				modelEndereco.setNumero(txtNum.getText());
+				modelEndereco.setLogradouro(txtLogradouro.getText());
+				modelEndereco.setCEP(txtCEP.getText());
+				modelEndereco.setIdCidade(comboDao.FkRadio(cboxCidade)); // get ID ComboBox the city
 				
-				//insere o endereço
-				endDao.adicionaEndereco(modelHospede);
+				//Inserts Address on the table 
+				endDao.adicionaEndereco(modelEndereco);
 				
-
-				//Grava o Hospede
+				//Inserts Guest
 				modelHospede.setNome(txtNome.getText());
 				modelHospede.setRG(txtRG.getText());
 				modelHospede.setCPF(txtCPF.getText());
 				modelHospede.setTelefone(txtTel.getText());
 				modelHospede.setCelular(txtCel.getText());
 				modelHospede.setEmail(txtEmail.getText());
-				//Pega o ultimo ID do registro de endereco
+				//Get last ID Address
 				modelHospede.setId_end(endDao.ultimoID());
 				
-				//Insere o hospede na tabela
+				//Inserts Guest on the table 
 				hospdao.adicionaHospede(modelHospede);
 				
 

@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 import br.michel.dao.ComboDao;
 import br.michel.dao.EnderecoDao;
 import br.michel.dao.FuncionarioDao;
+import br.michel.modelo.ModelEndereco;
 import br.michel.modelo.ModelFuncionario;
 
 import java.awt.event.ActionListener;
@@ -45,6 +46,8 @@ public class CadFuncionario extends JDialog {
 	EnderecoDao endDao = new EnderecoDao();
 	FuncionarioDao funcDao = new FuncionarioDao();
 	ModelFuncionario modelFuncionario = new ModelFuncionario();
+	ModelEndereco modelEndereco = new ModelEndereco();
+	
 	private JComboBox cboxCidade;
 	
 	public static void main(String[] args) {
@@ -147,7 +150,7 @@ public class CadFuncionario extends JDialog {
 				cboxCidade = new JComboBox();
 				cboxCidade.setBounds(10, 209, 127, 20);
 				panel.add(cboxCidade);
-				//Atualiza ComboBox
+				//Refresh ComboBox
 				comboDao.AtualizaCombo(cboxCidade, "cidade");
 			}
 			{
@@ -269,18 +272,17 @@ public class CadFuncionario extends JDialog {
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					//Grava Endereço
-					modelFuncionario.setBairro(txtBairro.getText());
-					modelFuncionario.setNumero(txtNumero.getText());
-					modelFuncionario.setLogradouro(txtLogradouro.getText());
-					modelFuncionario.setCEP(txtCEP.getText());
-					modelFuncionario.setId(comboDao.FkRadio(cboxCidade)); // Pega a ID do ComboBox cidade
+					//Inserts Address
+					modelEndereco.setBairro(txtBairro.getText());
+					modelEndereco.setNumero(txtNumero.getText());
+					modelEndereco.setLogradouro(txtLogradouro.getText());
+					modelEndereco.setCEP(txtCEP.getText());
+					modelEndereco.setIdCidade(comboDao.FkRadio(cboxCidade)); // get ID ComboBox the city
 					
-					//TODO: Redundancia, talvez criar um MODELO pra endereço
-					//insere o endereço
-					endDao.adicionaEndereco2(modelFuncionario);
+					//Inserts Address on the table 
+					endDao.adicionaEndereco(modelEndereco);
 					
-					//Grava o Hospede
+					//Inserts Staff
 					modelFuncionario.setNome(txtNome.getText());
 					modelFuncionario.setCPF(txtCPF.getText());
 					modelFuncionario.setRG(txtRG.getText());
@@ -291,10 +293,10 @@ public class CadFuncionario extends JDialog {
 					modelFuncionario.setEmail(txtEmail.getText());;
 					modelFuncionario.setAdmissao(txtAdm.getText());;
 					modelFuncionario.setFuncao(txtFuncao.getText());;
-					//Pega o ultimo ID do registro de endereco
+					//get last ID Address
 					modelFuncionario.setId_end(endDao.ultimoID());
 					
-					//Insere o hospede na tabela
+					//Inserts Staff on the table 
 					funcDao.adicionaFuncionario(modelFuncionario);
 					
 				}
