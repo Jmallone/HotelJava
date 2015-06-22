@@ -36,7 +36,9 @@ public class Conn{
 			
 		} catch( Exception e ) {
 			JOptionPane.showMessageDialog(null, "ERRO AO CADASTRAR! \n "+e);
-		}
+		}finally {
+			//sessao.close();
+	         }
 	}
 	
 		public static Connection conectaMySQL() {

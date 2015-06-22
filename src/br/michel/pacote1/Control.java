@@ -20,7 +20,7 @@ public class Control {
 		comboBox.removeAllItems(); // Remove todos os Itens dentro do ComboBox
 		
 		try {
-			ResultSet resposta = Conn.consulta("SELECT * from "+tabela);
+			ResultSet resposta = Conn.consulta("SELECT * from "+tabela); // Bad pratic '*'
 			
 			while( resposta.next()) {
 				

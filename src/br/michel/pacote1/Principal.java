@@ -22,6 +22,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Principal extends JFrame {
 	private JPanel contentPane;
@@ -231,8 +235,15 @@ public class Principal extends JFrame {
 		});
 		
 		JMenuItem mntmQuartos_1 = new JMenuItem("Quartos");
+		mntmQuartos_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		mnConsultas.add(mntmQuartos_1);
 		mnConsultas.add(mntmDisponibilidadesDeQuartos);
+		
+		JMenuItem mntmFuncionarios_1 = new JMenuItem("Funcionarios");
+		mnConsultas.add(mntmFuncionarios_1);
 		
 		JMenu mnRelatorios = new JMenu("Relatorios");
 		menuBar.add(mnRelatorios);
@@ -267,6 +278,16 @@ public class Principal extends JFrame {
 		
 		JMenuItem mntmEmitir = new JMenuItem("Emitir Comprovante de Hospedagem");
 		mnRelatorios.add(mntmEmitir);
+		
+		JMenu mnSair = new JMenu("Sair");
+		mnSair.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				 System.exit(0);
+			}
+		});
+		menuBar.add(mnSair);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
