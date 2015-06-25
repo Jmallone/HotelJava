@@ -3,7 +3,6 @@ package br.michel.modelo;
 public class ModelEstado {
 	String nome;
 	
-//TODO: Desnecessario depois rever isso
 	public String getNome() {
 		return nome;
 	}

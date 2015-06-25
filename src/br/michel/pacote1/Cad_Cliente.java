@@ -47,7 +47,6 @@ public class Cad_Cliente extends JDialog {
 		
 		String sql = null;
 		
-		//TODO: Fazer com que o programa pegue as informaçoes do Endereço também
 		//if (edit == false){
 			sql = "INSERT INTO `caqui`.`endereco` (`Numero`, `Bairro`, `CEP`, `Logradouro`, `Cidade_idCidade`) VALUES"
 					+ " ('"+Numero+"', '"+Bairro+"', '"+CEP+"', '"+Logradouro+"', '"+id+"')";
