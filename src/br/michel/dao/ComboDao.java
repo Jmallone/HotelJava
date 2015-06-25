@@ -3,7 +3,9 @@ package br.michel.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JComboBox;
+
 import br.michel.modelo.ModelCombo;
 
 public class ComboDao {
@@ -15,6 +17,13 @@ public class ComboDao {
 		
 		ModelCombo i = (ModelCombo) comboBox.getSelectedItem();  
 		return i.id;
+		
+	}
+	
+	public String nomefk(JComboBox<?> comboBox){ 
+		
+		ModelCombo i = (ModelCombo) comboBox.getSelectedItem();  
+		return i.nome;
 		
 	}
 	
@@ -41,6 +50,33 @@ public class ComboDao {
         
 		}
 	}
+	
+	
+	//POG
+	public void AtualizaComboNum(JComboBox<ModelCombo> comboBox, String tabela){
+		
+		try{
+			PreparedStatement stmt = Con.Conecta().prepareStatement("SELECT * from "+tabela);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				//Creating object 
+				int id = rs.getInt("id"+tabela);  
+		        String nome = rs.getString("Numero_Quarto");  
+		        comboBox.addItem(new ModelCombo(id,nome));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (SQLException e) {
+			
+			throw new RuntimeException(e);
+        
+		}
+	}
+
 		
 }
 

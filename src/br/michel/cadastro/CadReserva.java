@@ -200,6 +200,7 @@ public class CadReserva extends JDialog {
 						modelReserva.setDataAtual(txtAtual.getText());
 						modelReserva.setDataFinal(txtSaida.getText());
 						modelReserva.setIdTipo(comboDao.FkRadio(cboxTipo));
+						
 						modelReserva.setStatus( (String) cboxStatus.getSelectedItem() );
 						
 						reservaDao.adicionaReserva(modelReserva);
