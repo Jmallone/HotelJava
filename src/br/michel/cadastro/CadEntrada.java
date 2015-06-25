@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class CadEntrada extends JDialog {
 
@@ -47,6 +49,7 @@ public class CadEntrada extends JDialog {
 	
 	private JComboBox<ModelCombo> cboxFuncionario;
 	private JComboBox<ModelCombo> cboxNumero;
+	private JTextField txtLimite;
 	
 	public static void main(String[] args) {
 		try {
@@ -111,6 +114,25 @@ public class CadEntrada extends JDialog {
 		panel.add(button_1);
 		
 		cboxNumero = new JComboBox<ModelCombo>();
+		cboxNumero.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				//refresh the price
+				
+				List<ModelTipoQuarto> valor = entradaDao.getLista(comboDao.nomefk(cboxNumero));
+				
+				int dado = -1;
+				
+				for (ModelTipoQuarto modelEntrada : valor) {
+
+					dado = modelEntrada.getValor();
+					  
+				}
+				
+				txtValor.setText(""+dado);
+				
+			}
+		});
 		cboxNumero.setBounds(10, 219, 76, 22);
 		panel.add(cboxNumero);
 		comboDao.AtualizaComboNum(cboxNumero, "quarto");
@@ -141,6 +163,15 @@ public class CadEntrada extends JDialog {
 		txtHora.setColumns(10);
 		
 		txtDesconto = new JTextField();
+		txtDesconto.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				//TODO: Atualizar o preço quando perder o foco do Desconto
+				//refresh price
+				
+			}
+		});
 		txtDesconto.setBounds(10, 260, 64, 20);
 		panel.add(txtDesconto);
 		txtDesconto.setText("R$ 00,00");
@@ -166,6 +197,15 @@ public class CadEntrada extends JDialog {
 		JLabel lblStatus = new JLabel("STATUS");
 		lblStatus.setBounds(10, 102, 93, 14);
 		panel.add(lblStatus);
+		
+		txtLimite = new JTextField();
+		txtLimite.setBounds(17, 309, 86, 20);
+		panel.add(txtLimite);
+		txtLimite.setColumns(10);
+		
+		JLabel lblLimiteConsumo = new JLabel("LIMITE CONSUMO");
+		lblLimiteConsumo.setBounds(10, 291, 136, 14);
+		panel.add(lblLimiteConsumo);
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		
 		{
@@ -177,27 +217,17 @@ public class CadEntrada extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						/*modelEntrada.setIdFunc( comboDao.FkRadio(cboxFuncionario) );
+						modelEntrada.setIdFunc( comboDao.FkRadio(cboxFuncionario) );
 						modelEntrada.setIdNome( comboDao.FkRadio(cboxNome) );
 						modelEntrada.setStatus( (String) cboxStatus.getSelectedItem() );
 						modelEntrada.setDataAtual( sdf.format( dtAtual.getDate() ) );
 						modelEntrada.setDataPrev( sdf.format( dtSaida.getDate() ) );
 						modelEntrada.setIdNum( comboDao.FkRadio(cboxNumero) );
-					    */
+					    modelEntrada.setDesc(txtDesconto.getText());
+						modelEntrada.setLimite(  Float.valueOf( txtLimite.getText() ));
+						modelEntrada.setHorarioEntrada(txtHora.getText());
 						
-						
-						List<ModelTipoQuarto> valor = entradaDao.getLista(comboDao.nomefk(cboxNumero));
-						
-						int dado = -1;
-						
-						for (ModelTipoQuarto modelEntrada : valor) {
-
-							System.out.println("valor: " + modelEntrada.getValor()+"an NUM: ");
-							dado = modelEntrada.getValor();
-							  
-						}
-						
-						txtValor.setText(""+dado);
+						entradaDao.adicionaEntrada(modelEntrada);
 						
 						//JOptionPane.showMessageDialog(null, "DATA1: "+d+"\n DATA2: "+d2);
 						

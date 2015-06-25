@@ -5,10 +5,18 @@ public class ModelEntrada {
 	
 	//TODO: Adicionar na tela Entrada a Reserva como opcional
 	int idFunc, idNome, idNum, idReserva;
+	float limite;
 	String dataAtual, dataPrev, desc, horarioEntrada, status, num;
 	
 	
 	
+	
+	public float getLimite() {
+		return limite;
+	}
+	public void setLimite(float limite) {
+		this.limite = limite;
+	}
 	public String getNum() {
 		return num;
 	}

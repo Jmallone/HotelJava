@@ -14,8 +14,8 @@ public class EntradaDao {
 	
 	public void adicionaEntrada(ModelEntrada ModelEntrada){
 		String sql = "INSERT INTO `caqui`.`hospedagem` "
-				+ "(`Status`, `Data_Entrada`, `Hora_Entrada`, `Data_Saida_Prevista`, `Funcionarios_idFuncionarios`, `Hospede_idHospede`, `Quarto_idQuarto`, `Reservas_idReservas`) VALUES "
-				+ "('hospedado', '2015-02-02', '13:00', '2015-02-02', '3', '12', '1', '2')";
+				+ "(`Status`, `Data_Entrada`, `Hora_Entrada`, `Data_Saida_Prevista`, `Limite_Consumo`, `Funcionarios_idFuncionarios`, `Hospede_idHospede`, `Quarto_idQuarto`, `Reservas_idReservas`) VALUES "
+				+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		
 		try{
@@ -26,11 +26,15 @@ public class EntradaDao {
 			stmt.setString(2, ModelEntrada.getDataAtual());
 			stmt.setString(3, ModelEntrada.getHorarioEntrada());
 			stmt.setString(4, ModelEntrada.getDataPrev());
-			stmt.setLong(5, ModelEntrada.getIdFunc());
-			stmt.setLong(6, ModelEntrada.getIdNome());
-			stmt.setLong(7, ModelEntrada.getIdNum());
-			stmt.setLong(8, ModelEntrada.getIdReserva());
+			stmt.setLong(5, (long) ModelEntrada.getLimite());
+			stmt.setLong(6, ModelEntrada.getIdFunc());
+			stmt.setLong(7, ModelEntrada.getIdNome());
+			stmt.setLong(8, ModelEntrada.getIdNum());
 			
+			//TODO: Arrumar esse negocio de reserva tirar la pra ser nulo
+			//stmt.setLong(9, ModelEntrada.getIdReserva());
+			stmt.setLong(9, 2);
+		
 			//execute and close
 			stmt.execute();
 			stmt.close();
