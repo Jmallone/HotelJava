@@ -31,6 +31,8 @@ public class Cad_Cliente extends JDialog {
 	private JTextField txtNumero;
 	
 	Cad_Cidade cidade = new Cad_Cidade();
+	ComboBox cbox = new ComboBox("SELECT * from cidade");
+	
 	private JComboBox comboBox;
 	
 	String Nome, Email, Bairro,Logradouro, RG, CPF, Telefone, Celular, Numero, CEP;
@@ -131,8 +133,11 @@ public class Cad_Cliente extends JDialog {
 		String sql = "SELECT * FROM caqui.hospede WHERE `idhospede`='"+id_Con+"'";
 		id_edit = id_Con;
 		edit = true;
-		comboBox.removeAllItems(); 
-		Control.Click(comboBox,"cidade" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+		
+		cbox.atualizeItens();
+		
+		//comboBox.removeAllItems(); 
+		//Control.Click(comboBox,"cidade" ); // Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
 		
 		try {
 			
@@ -168,9 +173,46 @@ public class Cad_Cliente extends JDialog {
 	           System.out.println("VendorError: " + ex.getErrorCode());
 	      }
 		
+		
+		
+		
+		
 	}
 	
-	
+	public void populaEnd(int idEnd){
+		
+		//Inserir endereco
+				String sql2 = "SELECT * FROM caqui.endereco WHERE idEndereco= "+idEnd+"";
+				
+				try {
+					
+					ResultSet rs = Conn.consulta( sql2 );
+			      
+			      while(rs.next()){ 
+			    	 // idHospede, Nome, RG, CPF, Telefone, Celular, Email, Endereco_idEndereco, idHospede, id
+						//String id2 = Integer.toString(resposta.getInt( "produtos.idProdutos" )) ;
+						String umBairro = rs.getString( "Bairro" );
+						String umRua = rs.getString("Logradouro");
+						String umNumero = rs.getString("Numero");
+						
+						txtBairro.setText(umBairro);
+						txtRua.setText(umRua);
+						txtNumero.setText(umNumero);
+						 
+						
+						
+			          }
+			      } 
+			      catch(SQLException ex){
+			           System.out.println("SQLException: " + ex.getMessage());
+			           System.out.println("SQLState: " + ex.getSQLState());
+			           System.out.println("VendorError: " + ex.getErrorCode());
+			      }
+				
+				cbox.selectItemById(2);
+				JOptionPane.showMessageDialog(null, "OLA : "+idEnd);
+		
+	}
 	
 	public Cad_Cliente() {
 		setTitle("Cliente");
@@ -272,11 +314,11 @@ public class Cad_Cliente extends JDialog {
 			contentPanel.add(txtBairro);
 		}
 		{
-			comboBox = new JComboBox();
-			comboBox.setBounds(10, 233, 130, 20);
-			contentPanel.add(comboBox);
-			Control.Click(comboBox,"cidade" );// Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
-			
+//			comboBox = new JComboBox();
+			cbox.setBounds(10, 233, 130, 20);
+			contentPanel.add(cbox);
+			//Control.Click(comboBox,"cidade" );// Ira para função Click, que apagara todos os itens no ComboBox e Atualizara em seguida
+			cbox.atualizeItens();
 		}
 		
 		{

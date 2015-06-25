@@ -50,7 +50,7 @@ public class Con_Cliente extends JDialog {
     
     public void atualiza()
     {
-		String sql = "SELECT hospede.idHospede, hospede.Nome, endereco.Logradouro, cidade.Nome, estado.Nome , hospede.Email, hospede.Telefone, hospede.Celular, Endereco_idEndereco "
+		String sql = "SELECT hospede.idHospede, hospede.Nome, endereco.Logradouro, cidade.Nome, estado.Nome , hospede.Email, hospede.Telefone, hospede.Celular, Endereco_idEndereco, Cidade_idCidade "
 				+ "FROM hospede "
 				+ "LEFt JOIN endereco ON idHospede = idEndereco "
 				+ "Left join cidade ON Cidade_idCidade=idCidade "
@@ -73,9 +73,8 @@ public class Con_Cliente extends JDialog {
 					String umTelefone = resposta.getString("hospede.Telefone");
 					String umCelular = resposta.getString("hospede.Celular");
 					int id = resposta.getInt("Endereco_idEndereco");
-					modelo.addRow( new Object[]{id2 , umNome, umaRua, umaCity, umEstado, umEmail, umTelefone, umCelular});
-					new teste(id);
-					
+					modelo.addRow( new Object[]{id2 , umNome, umaRua, new Item( id, umaCity ), umEstado, umEmail, umTelefone, umCelular});
+					 
 	      	}   
 	      } 
 	      catch(SQLException ex){
@@ -223,18 +222,27 @@ public class Con_Cliente extends JDialog {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int linhaSel = tabela.getSelectedRow();
+				String dado = tabela.getValueAt(0,3).toString();
+				
+				JOptionPane.showMessageDialog(null, "DADO: "+dado);
+				
+				/*int linhaSel = tabela.getSelectedRow();
 				int colunaSel = tabela.getSelectedColumn();
 				int dado = Integer.parseInt(tabela.getValueAt(linhaSel, 0).toString());
 				JOptionPane.showMessageDialog(null, "DADO: "+dado);
-	
+				
+				int city = ( (Item) modelo.getValueAt(linhaSel , 3)).getId() ;
+				
+				JOptionPane.showMessageDialog(null, "DADO: "+dado+"\n ID DA CIDADE "+city+"an ID END ");
+				
 				Cad_Cliente clie = new Cad_Cliente();
 				clie.editaHosp(dado); 
+				clie.populaEnd(city); //Endwereco
 				clie.setModal(true);
 				clie.setVisible(true);
 				
 				limpa_tabela();
-				atualiza();
+				atualiza();*/
 				
 			}
 		});
