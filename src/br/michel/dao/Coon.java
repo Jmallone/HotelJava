@@ -23,4 +23,6 @@ public class Coon {
 		}
 		return conexao;
 	}
+	
+	//TODO: FECHAR A CONEXAO .CLOSE OU USAR SINGLETON
 }
