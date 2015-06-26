@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.michel.modelo.ModelSaida;
-import br.michel.modelo.ModelTipoQuarto;
 
 public class SaidaDao {
 	Coon Con = new Coon();

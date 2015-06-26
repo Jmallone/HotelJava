@@ -5,14 +5,13 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import br.michel.dao.ComboDao;
 import br.michel.dao.SaidaDao;
+import br.michel.modelo.ModelCombo;
 import br.michel.modelo.ModelSaida;
-import br.michel.modelo.ModelTipoQuarto;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -20,18 +19,19 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 public class CadSaida extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtHorario;
 
@@ -44,7 +44,7 @@ public class CadSaida extends JDialog {
 	ComboDao comboDao = new ComboDao();
 	SaidaDao saidaDao = new SaidaDao();
 	ModelSaida modelSaida = new ModelSaida();
-	private JComboBox cboxHospede;
+	private JComboBox<ModelCombo> cboxHospede;
 	
 	public static void main(String[] args) {
 		try {
@@ -75,7 +75,7 @@ public class CadSaida extends JDialog {
 		lblSelecionarData.setBounds(10, 11, 137, 14);
 		contentPanel.add(lblSelecionarData);
 		
-		cboxHospede = new JComboBox();
+		cboxHospede = new JComboBox<ModelCombo>();
 		cboxHospede.setBounds(175, 36, 160, 20);
 		contentPanel.add(cboxHospede);
 		
