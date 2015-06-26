@@ -76,6 +76,32 @@ public class ComboDao {
         
 		}
 	}
+	
+	public void AtualizaComboSaida(JComboBox<ModelCombo> comboBox, String data){
+		
+		try{
+			String sql = "SELECT hospedagem.idHospedagem, hospedagem.Data_Saida_Prevista, hospede.Nome FROM hospedagem  LEFt JOIN hospede ON Hospede_idHospede = idHospede  WHERE hospedagem.Data_Saida_Prevista "
+					+ "like '"+data+"'";
+			PreparedStatement stmt = Con.Conecta().prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				//Creating object 
+				int id = rs.getInt("idHospedagem");  
+		        String nome = rs.getString("Nome");  
+		        comboBox.addItem(new ModelCombo(id,nome));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (SQLException e) {
+			
+			throw new RuntimeException(e);
+        
+		}
+	}
 
 		
 }
