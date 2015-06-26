@@ -12,6 +12,7 @@ import br.michel.modelo.ModelTipoQuarto;
 public class SaidaDao {
 	Coon Con = new Coon();
 	
+	//TODO: Tirar esta function 
 	public List<ModelSaida> getLista(String data) {
 	     try {
 	        

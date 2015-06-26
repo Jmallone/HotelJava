@@ -29,6 +29,8 @@ public class ComboDao {
 	
 	public void AtualizaCombo(JComboBox<ModelCombo> comboBox, String tabela){
 		
+		comboBox.removeAllItems();
+		
 		try{
 			PreparedStatement stmt = Con.Conecta().prepareStatement("SELECT * from "+tabela);
 			ResultSet rs = stmt.executeQuery();
@@ -55,6 +57,7 @@ public class ComboDao {
 	//POG
 	public void AtualizaComboNum(JComboBox<ModelCombo> comboBox, String tabela){
 		
+		comboBox.removeAllItems();
 		try{
 			PreparedStatement stmt = Con.Conecta().prepareStatement("SELECT * from "+tabela);
 			ResultSet rs = stmt.executeQuery();
@@ -79,9 +82,10 @@ public class ComboDao {
 	
 	public void AtualizaComboSaida(JComboBox<ModelCombo> comboBox, String data){
 		
+		comboBox.removeAllItems();
 		try{
 			String sql = "SELECT hospedagem.idHospedagem, hospedagem.Data_Saida_Prevista, hospede.Nome FROM hospedagem  LEFt JOIN hospede ON Hospede_idHospede = idHospede  WHERE hospedagem.Data_Saida_Prevista "
-					+ "like '"+data+"'";
+					+ "like '"+data+"'  and hospedagem.status like 'Hospedado'";
 			PreparedStatement stmt = Con.Conecta().prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			

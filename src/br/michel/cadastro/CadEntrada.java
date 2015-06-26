@@ -173,7 +173,7 @@ public class CadEntrada extends JDialog {
 		});
 		txtDesconto.setBounds(10, 260, 64, 20);
 		panel.add(txtDesconto);
-		txtDesconto.setText("00,00");
+		txtDesconto.setText("00");
 		txtDesconto.setColumns(10);
 		
 		JLabel label_5 = new JLabel("DESCONTO");
@@ -198,7 +198,7 @@ public class CadEntrada extends JDialog {
 		panel.add(lblStatus);
 		
 		txtLimite = new JTextField();
-		txtLimite.setText("00,00");
+		txtLimite.setText("00");
 		txtLimite.setBounds(10, 309, 86, 20);
 		panel.add(txtLimite);
 		txtLimite.setColumns(10);
