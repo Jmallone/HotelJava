@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.michel.dao.ComboDao;
@@ -174,7 +173,7 @@ public class CadEntrada extends JDialog {
 		});
 		txtDesconto.setBounds(10, 260, 64, 20);
 		panel.add(txtDesconto);
-		txtDesconto.setText("R$ 00,00");
+		txtDesconto.setText("00,00");
 		txtDesconto.setColumns(10);
 		
 		JLabel label_5 = new JLabel("DESCONTO");
@@ -199,7 +198,8 @@ public class CadEntrada extends JDialog {
 		panel.add(lblStatus);
 		
 		txtLimite = new JTextField();
-		txtLimite.setBounds(17, 309, 86, 20);
+		txtLimite.setText("00,00");
+		txtLimite.setBounds(10, 309, 86, 20);
 		panel.add(txtLimite);
 		txtLimite.setColumns(10);
 		

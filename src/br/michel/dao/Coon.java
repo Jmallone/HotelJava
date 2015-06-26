@@ -24,5 +24,5 @@ public class Coon {
 		return conexao;
 	}
 	
-	//TODO: FECHAR A CONEXAO .CLOSE OU USAR SINGLETON
+	//TODO: FECHAR A CONEXAO .CLOSE OU USAR SINGLETON --> https://pt.wikipedia.org/?title=Singleton#Em_Java
 }

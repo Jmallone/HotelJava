@@ -21,8 +21,12 @@ import br.michel.modelo.ModelReserva;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import com.toedter.calendar.JDateChooser;
 
 public class CadReserva extends JDialog {
 
@@ -31,8 +35,6 @@ public class CadReserva extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtAtual;
-	private JTextField txtSaida;
 	private JTextField txtRequisitante;
 	private JTextField txtTelefone;
 
@@ -41,13 +43,14 @@ public class CadReserva extends JDialog {
 	ModelReserva modelReserva = new ModelReserva();
 	ReservaDao reservaDao = new ReservaDao();
 	ComboDao comboDao = new ComboDao();
-	GregorianCalendar calendar = new GregorianCalendar(); 
-	
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	
 	private JComboBox<ModelCombo> cboxFunc;
 	private JComboBox<?> cboxStatus;
 	private JComboBox<ModelCombo> cboxTipo;
 	private JComboBox<ModelCombo> cboxNome;
+	private JDateChooser dtAtual;
+	private JDateChooser dtPrevista;
 	
 	public static void main(String[] args) {
 		try {
@@ -81,14 +84,6 @@ public class CadReserva extends JDialog {
 				panel.add(label);
 			}
 			{
-				txtAtual = new JTextField();
-				txtAtual.setText("2015-12-30");
-				txtAtual.setHorizontalAlignment(SwingConstants.CENTER);
-				txtAtual.setColumns(10);
-				txtAtual.setBounds(10, 244, 64, 20);
-				panel.add(txtAtual);
-			}
-			{
 				JLabel label = new JLabel("DATA ATUAL");
 				label.setBounds(10, 230, 93, 14);
 				panel.add(label);
@@ -103,14 +98,6 @@ public class CadReserva extends JDialog {
 				JLabel label = new JLabel("NOME");
 				label.setBounds(10, 112, 46, 14);
 				panel.add(label);
-			}
-			{
-				txtSaida = new JTextField();
-				txtSaida.setText("2015-12-30");
-				txtSaida.setHorizontalAlignment(SwingConstants.CENTER);
-				txtSaida.setColumns(10);
-				txtSaida.setBounds(94, 244, 64, 20);
-				panel.add(txtSaida);
 			}
 			{
 				JLabel label = new JLabel("SAIDA PREVISTA");
@@ -182,6 +169,14 @@ public class CadReserva extends JDialog {
 			JLabel lblTelefone = new JLabel("TELEFONE");
 			lblTelefone.setBounds(10, 178, 136, 14);
 			panel.add(lblTelefone);
+			
+			dtAtual = new JDateChooser();
+			dtAtual.setBounds(0, 244, 87, 20);
+			panel.add(dtAtual);
+			
+			dtPrevista = new JDateChooser();
+			dtPrevista.setBounds(95, 244, 87, 20);
+			panel.add(dtPrevista);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -197,8 +192,8 @@ public class CadReserva extends JDialog {
 						modelReserva.setIdNome(comboDao.FkRadio(cboxNome));
 						
 						modelReserva.setTelefone( Integer.parseInt(txtTelefone.getText()) );
-						modelReserva.setDataAtual(txtAtual.getText());
-						modelReserva.setDataFinal(txtSaida.getText());
+						modelReserva.setDataAtual( sdf.format( dtAtual.getDate()) );
+						modelReserva.setDataFinal(sdf.format( dtPrevista.getDate()));
 						modelReserva.setIdTipo(comboDao.FkRadio(cboxTipo));
 						
 						modelReserva.setStatus( (String) cboxStatus.getSelectedItem() );
@@ -218,10 +213,7 @@ public class CadReserva extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						//AQUI
-						int hora = calendar.get(Calendar.HOUR);
-						int minuto = calendar.get(Calendar.MINUTE);
-						JOptionPane.showMessageDialog(null, ""+hora+" : "+minuto);
+
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

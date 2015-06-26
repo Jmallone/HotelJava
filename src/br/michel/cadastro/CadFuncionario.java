@@ -21,6 +21,10 @@ import br.michel.modelo.ModelFuncionario;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import com.toedter.calendar.JDateChooser;
 
 public class CadFuncionario extends JDialog {
 
@@ -41,8 +45,6 @@ public class CadFuncionario extends JDialog {
 	private JTextField txtFuncao;
 	private JTextField txtLogradouro;
 	private JTextField txtCarteira;
-	private JTextField txtAdm;
-	private JTextField textField_13;
 	private JTextField txtCEP;
 	
 	//Create Objects 
@@ -52,7 +54,10 @@ public class CadFuncionario extends JDialog {
 	ModelFuncionario modelFuncionario = new ModelFuncionario();
 	ModelEndereco modelEndereco = new ModelEndereco();
 	
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+	
 	private JComboBox<ModelCombo> cboxCidade;
+	private JDateChooser dtAdmissao;
 	
 	public static void main(String[] args) {
 		try {
@@ -235,22 +240,9 @@ public class CadFuncionario extends JDialog {
 				panel.add(label);
 			}
 			{
-				txtAdm = new JTextField();
-				txtAdm.setText("2015-12-30");
-				txtAdm.setColumns(10);
-				txtAdm.setBounds(10, 437, 84, 20);
-				panel.add(txtAdm);
-			}
-			{
 				JLabel label = new JLabel("DATA DEMISS\u00C3O");
 				label.setBounds(109, 421, 114, 14);
 				panel.add(label);
-			}
-			{
-				textField_13 = new JTextField();
-				textField_13.setColumns(10);
-				textField_13.setBounds(104, 437, 86, 20);
-				panel.add(textField_13);
 			}
 			{
 				JLabel label = new JLabel("MOTIVO DEMISS\u00C3O");
@@ -270,6 +262,19 @@ public class CadFuncionario extends JDialog {
 				panel.add(txtCEP);
 				txtCEP.setColumns(10);
 			}
+			
+			JDateChooser dtDemissao = new JDateChooser();
+			dtDemissao.setBounds(104, 437, 87, 20);
+			panel.add(dtDemissao);
+			
+			dtAdmissao = new JDateChooser();
+			dtAdmissao.setBounds(10, 437, 87, 20);
+			panel.add(dtAdmissao);
+			
+			JLabel lblCep = new JLabel("CEP");
+			lblCep.setBounds(151, 328, 88, 14);
+			panel.add(lblCep);
+			
 		}
 		{
 			JButton btnOk = new JButton("Ok");
@@ -295,7 +300,7 @@ public class CadFuncionario extends JDialog {
 					modelFuncionario.setCarteira(txtCarteira.getText());;
 					modelFuncionario.setCelular(txtCelular.getText());;
 					modelFuncionario.setEmail(txtEmail.getText());;
-					modelFuncionario.setAdmissao(txtAdm.getText());;
+					modelFuncionario.setAdmissao( sdf.format( dtAdmissao.getDate() ) );;
 					modelFuncionario.setFuncao(txtFuncao.getText());;
 					//get last ID Address
 					modelFuncionario.setId_end(endDao.ultimoID());
@@ -309,5 +314,4 @@ public class CadFuncionario extends JDialog {
 			contentPanel.add(btnOk);
 		}
 	}
-
 }

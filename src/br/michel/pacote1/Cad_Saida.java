@@ -41,9 +41,9 @@ public class Cad_Saida extends JDialog {
 			contentPanel.add(label);
 		}
 		{
-			JLabel label = new JLabel("HORARIO ENTRADA");
-			label.setBounds(97, 56, 113, 14);
-			contentPanel.add(label);
+			JLabel lblHorarioSaida = new JLabel("HORARIO SAIDA");
+			lblHorarioSaida.setBounds(97, 56, 113, 14);
+			contentPanel.add(lblHorarioSaida);
 		}
 		{
 			JComboBox comboBox = new JComboBox();
