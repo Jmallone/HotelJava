@@ -1,5 +1,6 @@
 package br.michel.cadastro;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,58 +13,47 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import br.michel.dao.EnderecoDao;
-import br.michel.dao.HospedeDao;
-import br.michel.modelo.ModelEndereco;
-import br.michel.modelo.ModelHospede;
+import br.michel.dao.ProdutoDao;
+import br.michel.modelo.ModelProduto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
+public class ConProduto extends JDialog {
 
-public class ConHospede extends JDialog {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-
-	HospedeDao hospedeDao = new HospedeDao();
-	ModelHospede modelHospede = new ModelHospede();
-	CadHospede cadHospede = new CadHospede();
-	ModelEndereco modelEndereco = new ModelEndereco();
-	EnderecoDao enderecoDao = new EnderecoDao();
 	
     final static DefaultTableModel modelo = new DefaultTableModel();
     
     static JTable tabela = new JTable(modelo);
-	
-	
+    
+    ProdutoDao produtoDao = new ProdutoDao();
+    ModelProduto modelProduto = new ModelProduto();
+    
 	public static void main(String[] args) {
 		try {
-			ConHospede dialog = new ConHospede();
+			ConProduto dialog = new ConProduto();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public ConHospede() {
-		setTitle("Consultar Hospedes");
-		setBounds(100, 100, 633, 322);
+
+	/**
+	 * Create the dialog.
+	 */
+	public ConProduto() {
+		setTitle("Consultar Produtos");
+		setBounds(100, 100, 640, 375);
 		contentPanel.setBounds(0, 0, 0, 0);
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		modelo.addColumn("ID");
 	    modelo.addColumn("Nome");
-	    modelo.addColumn("Email");
-	    modelo.addColumn("Telefone");
-	    modelo.addColumn("ID_end");
+	    modelo.addColumn("Valor");
+	    modelo.addColumn("Quantidade");
+	    modelo.addColumn("ID_grupo");
 	   
 	   tabela.getColumnModel().getColumn(0).setPreferredWidth(0); 
 		tabela.getColumnModel().getColumn(0).setMinWidth(0);
@@ -82,12 +72,14 @@ public class ConHospede extends JDialog {
 	   tabela.setPreferredScrollableViewportSize(new Dimension(350, 50));
 	    
 	   tabela.setPreferredScrollableViewportSize(new Dimension(350, 50));
-	
-	   //refresh table 
-		hospedeDao.deletaTable(tabela, modelo);
-		hospedeDao.populaTable(modelo);
 	   
+	   //refresh table 
+		produtoDao.deletaTable(tabela, modelo);
+		produtoDao.populaTable(modelo);
+	
+
 	   Container c = getContentPane();
+	   getContentPane().setLayout(null);
 	   getContentPane().setLayout(null);
 	   getContentPane().setLayout(null);
 	   getContentPane().setLayout(null);
@@ -96,8 +88,9 @@ public class ConHospede extends JDialog {
 	   final JScrollPane scrollPane = new JScrollPane(tabela);
 	   scrollPane.setBounds(10, 11, 597, 219);
 	   c.add(scrollPane);
-		
+	   
 		getContentPane().add(contentPanel);
+		contentPanel.setLayout(null);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(0, 0, 0, 0);
@@ -115,50 +108,54 @@ public class ConHospede extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		{
-			JButton btnOk = new JButton("OK");
-			btnOk.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					hospedeDao.deletaTable(tabela, modelo);
-					hospedeDao.populaTable(modelo);
-					
-					
-				}
-			});
-			btnOk.setBounds(238, 241, 89, 23);
-			getContentPane().add(btnOk);
-		}
-		{
-			JButton btnEditar = new JButton("Editar");
-			btnEditar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					//TODO:Pega a ID do Hospede para editar
-					int dado = (Integer) tabela.getValueAt(tabela.getSelectedRow(),0);
-					
-					int dado2 = (Integer) tabela.getValueAt(tabela.getSelectedRow(),4);
-					
-					//System.out.println("ID: "+dado+"\n END: "+dado2);
-					
-					modelEndereco.setIdCidade(dado2);
-					enderecoDao.deletaEndereco(modelEndereco);
-					
-					modelHospede.setId(dado);
-					hospedeDao.deletaHospede(modelHospede);
-					
-
-					
-					
-				}
-			});
-			btnEditar.setBounds(10, 241, 89, 23);
-			getContentPane().add(btnEditar);
-		}
-		{
-			JButton btnDeletar = new JButton("Deletar");
-			btnDeletar.setBounds(125, 241, 89, 23);
-			getContentPane().add(btnDeletar);
-		}
+		
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int dado = (Integer) tabela.getValueAt(tabela.getSelectedRow(),0);
+				
+				//int dado2 = (Integer) tabela.getValueAt(tabela.getSelectedRow(),4);
+				
+				//System.out.println("ID: "+dado);
+				
+				CadProduto cadProduto = new CadProduto();
+				cadProduto.editar(dado);
+				cadProduto.setModal(true);
+				cadProduto.setVisible(true);
+				
+				//refresh table 
+				produtoDao.deletaTable(tabela, modelo);
+				produtoDao.populaTable(modelo);
+				
+			}
+		});
+		btnEditar.setBounds(10, 257, 89, 23);
+		getContentPane().add(btnEditar);
+		
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				modelProduto.setId((Integer) tabela.getValueAt(tabela.getSelectedRow(),0));
+				
+				produtoDao.deletarProduto(modelProduto);
+				
+				produtoDao.deletaTable(tabela, modelo);
+				produtoDao.populaTable(modelo);
+				
+			}
+		});
+		btnDeletar.setBounds(131, 257, 89, 23);
+		getContentPane().add(btnDeletar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnCancelar.setBounds(244, 257, 89, 23);
+		getContentPane().add(btnCancelar);
 	}
-
 }

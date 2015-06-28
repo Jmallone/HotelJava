@@ -18,6 +18,7 @@ import br.michel.modelo.ModelProduto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class CadProduto extends JDialog {
 
@@ -48,10 +49,31 @@ public class CadProduto extends JDialog {
 			e.printStackTrace();
 		}
 	}
+	
+	String funcao = "";
+	int id = -1;
 
-	/**
-	 * Create the dialog.
-	 */
+	public void editar(int valor ){
+		
+		funcao = "editar";
+		id = valor;
+		String dado = ""+id+"";
+		List<ModelProduto> produto = produtoDao.getLista(dado);
+		
+		for (ModelProduto modelProduto : produto) {
+			
+			txtNome.setText(modelProduto.getNome());
+			txtDesc.setText(modelProduto.getDesc());
+			TxtQuantidade.setText(modelProduto.getQtd());
+			txtValor.setText(modelProduto.getValor());
+			
+			
+		}
+	
+		
+	}
+
+	
 	public CadProduto() {
 		setTitle("Produto");
 		setBounds(100, 100, 194, 300);
@@ -133,7 +155,20 @@ public class CadProduto extends JDialog {
 						modelProduto.setQtd(TxtQuantidade.getText());
 						
 						//inserts table 
-						produtoDao.adicionaProduto(modelProduto);
+						if (funcao == ""){
+							
+							produtoDao.adicionaProduto(modelProduto);
+							
+						}else if (funcao == "editar"){
+							
+							modelProduto.setId(id);
+							produtoDao.editarProduto(modelProduto);
+							
+							
+						}
+						
+						funcao = "";
+
 						
 					}
 				});
@@ -143,6 +178,11 @@ public class CadProduto extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						setVisible(false);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

@@ -38,6 +38,26 @@ public class EnderecoDao {
 		
 	}
 	
+	public void deletaEndereco(ModelEndereco ModelEndereco){
+		
+		String sql = "DELETE FROM `caqui`.`endereco` WHERE `idEndereco`=?";
+
+		
+		try{
+			PreparedStatement stmt = Con.Conecta().prepareStatement(sql);
+			
+			//Set values
+			stmt.setLong(1, ModelEndereco.getIdCidade());
+			
+			//execute and close
+			stmt.execute();
+			stmt.close();
+		}catch (SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
 	// Get the last id on table Address and return
 	public int ultimoID(){
 		int ids = 0;

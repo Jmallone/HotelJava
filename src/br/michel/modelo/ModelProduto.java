@@ -4,14 +4,23 @@ public class ModelProduto {
 	String nome ;
 	String valor; 
 	String qtd;
+	String desc;
+	int idGrupo;
+	int id ;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getDesc() {
 		return desc;
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	String desc;
-	int idGrupo;
+
 	
 	public String getNome() {
 		return nome;

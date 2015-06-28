@@ -10,7 +10,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.michel.modelo.ModelHospede;
-import br.michel.modelo.ModelSaida;
 
 //Guests Inserts
 public class HospedeDao {
@@ -45,11 +44,32 @@ public class HospedeDao {
 		
 	}
 	
+	public void deletaHospede(ModelHospede ModelHospede){
+		
+		String sql = "DELETE FROM `caqui`.`hospede` WHERE `idHospede`=?";
+
+		
+		try{
+			PreparedStatement stmt = Con.Conecta().prepareStatement(sql);
+			
+			//Set values
+			System.out.println("\n ID: "+ModelHospede.getId()+"\n ");
+			stmt.setLong(1, ModelHospede.getId());
+			
+			//execute and close
+			stmt.execute();
+			stmt.close();
+		}catch (SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
 	public List<ModelHospede> getLista() {
 	     try {
 	        
 	    	 List<ModelHospede> hospede = new ArrayList<ModelHospede>();
-			String sql = "SELECT hospede.idHospede, hospede.Nome, hospede.Email, hospede.Telefone FROM hospede ";
+			String sql = "SELECT hospede.idHospede, hospede.Nome, hospede.Email, hospede.Telefone, Endereco_idEndereco  FROM hospede ";
 	        
 			PreparedStatement stmt = Con.Conecta().prepareStatement(sql); 
 			
@@ -63,6 +83,7 @@ public class HospedeDao {
 	             tipo.setNome(rs.getString("Nome"));
 	             tipo.setEmail(rs.getString("Email"));
 	             tipo.setTelefone(rs.getString("Telefone"));
+	             tipo.setId_end(rs.getInt("Endereco_idEndereco"));
 	             // adicionando o objeto à lista
 	             hospede.add(tipo);
 	         }
@@ -89,11 +110,12 @@ public class HospedeDao {
 		List<ModelHospede> hospede = getLista();
 		
 		for (ModelHospede modelHospede : hospede) {
-
-			model.addRow( new Object[]{ modelHospede.getNome(), modelHospede.getEmail(), modelHospede.getTelefone()});
+			
+			model.addRow( new Object[]{modelHospede.getId() ,modelHospede.getNome(), modelHospede.getEmail(), modelHospede.getTelefone(), modelHospede.getId_end()});
 			
 		}
 		
 	}
+	
 	
 }
