@@ -55,16 +55,16 @@ public class ComboDao {
 	
 	
 	//POG
-	public void AtualizaComboNum(JComboBox<ModelCombo> comboBox, String tabela){
+	public void AtualizaComboNum(JComboBox<ModelCombo> comboBox, String data){
 		
 		comboBox.removeAllItems();
 		try{
-			PreparedStatement stmt = Con.Conecta().prepareStatement("SELECT * from "+tabela);
+			PreparedStatement stmt = Con.Conecta().prepareStatement("select idQuarto, Numero_Quarto, Nome from quarto LEFt JOIN TipoQuarto ON TipoQuarto_idTipo = idtipoquarto where Numero_Quarto not in (SELECT quarto.Numero_Quarto FROM caqui.hospedagem LEFt JOIN Quarto ON Quarto_idQuarto = idQuarto LEFt JOIN TipoQuarto ON TipoQuarto_idTipo = idtipoquarto WHERE hospedagem.Data_Entrada like '"+data+"' and hospedagem.status like 'Hospedado')");
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()){
 				//Creating object 
-				int id = rs.getInt("id"+tabela);  
+				int id = rs.getInt("idQuarto");  
 		        String nome = rs.getString("Numero_Quarto");  
 		        comboBox.addItem(new ModelCombo(id,nome));
 				

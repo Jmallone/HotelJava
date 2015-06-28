@@ -19,6 +19,8 @@ import br.michel.modelo.ModelQuarto;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.DefaultComboBoxModel;
+
 public class CadQuarto extends JDialog {
 
 	/**
@@ -26,7 +28,6 @@ public class CadQuarto extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtStatus;
 	private JTextField txtNumero;
 
 	//Create Objects 
@@ -35,6 +36,7 @@ public class CadQuarto extends JDialog {
 	QuartoDao quartoDao = new QuartoDao();
 	
 	private JComboBox<ModelCombo> cboxTipo;
+	private JComboBox<?> cboxStatus;
 	
 	public static void main(String[] args) {
 		try {
@@ -68,11 +70,6 @@ public class CadQuarto extends JDialog {
 		label.setBounds(10, 11, 85, 14);
 		panel.add(label);
 		
-		txtStatus = new JTextField();
-		txtStatus.setColumns(10);
-		txtStatus.setBounds(10, 24, 164, 20);
-		panel.add(txtStatus);
-		
 		JLabel label_1 = new JLabel("TIPO");
 		label_1.setBounds(10, 55, 46, 14);
 		panel.add(label_1);
@@ -95,6 +92,12 @@ public class CadQuarto extends JDialog {
 		JButton button = new JButton("...");
 		button.setBounds(146, 69, 26, 23);
 		panel.add(button);
+		
+		cboxStatus = new JComboBox();
+		cboxStatus.setModel(new DefaultComboBoxModel(new String[] {"Livre", "Ocupado"}));
+		cboxStatus.setToolTipText("");
+		cboxStatus.setBounds(10, 24, 136, 20);
+		panel.add(cboxStatus);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -104,7 +107,7 @@ public class CadQuarto extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						modelQuarto.setStatus(txtStatus.getText());
+						modelQuarto.setStatus( (String) cboxStatus.getSelectedItem() );
 						modelQuarto.setNum(txtNumero.getText());
 						modelQuarto.setIdTipo(comboDao.FkRadio(cboxTipo));//get fk type room
 						

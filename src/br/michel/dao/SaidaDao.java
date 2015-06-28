@@ -16,7 +16,7 @@ public class SaidaDao {
 	     try {
 	        
 	    	 List<ModelSaida> hospede = new ArrayList<ModelSaida>();
-			String sql = "SELECT hospedagem.idHospedagem, hospedagem.Data_Saida_Prevista, hospede.Nome FROM hospedagem  LEFt JOIN hospede ON Hospede_idHospede = idHospede  WHERE hospedagem.Data_Saida_Prevista "
+			String sql = "SELECT hospedagem.idHospedagem, hospedagem.Data_Saida_Prevista, hospede.Nome FROM hospedagem LEFt JOIN hospede ON Hospede_idHospede = idHospede WHERE hospedagem.Data_Saida_Prevista "
 					+ "like '"+data+"'";
 	        
 			PreparedStatement stmt = Con.Conecta().prepareStatement(sql); 
@@ -25,7 +25,7 @@ public class SaidaDao {
 	 
 	         while (rs.next()) {
 	        	 
-	             // criando o objeto Contato
+	             // criando o objeto modelSaida
 	        	 ModelSaida tipo = new ModelSaida();
 	             tipo.setIdHospedagem(rs.getInt("idHospedagem"));
 	             tipo.setNome(rs.getString("Nome"));

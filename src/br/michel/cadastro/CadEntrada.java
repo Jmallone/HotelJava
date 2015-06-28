@@ -45,10 +45,12 @@ public class CadEntrada extends JDialog {
 	ModelEntrada modelEntrada = new ModelEntrada();
 	EntradaDao entradaDao = new EntradaDao();
 	
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	
 	private JComboBox<ModelCombo> cboxFuncionario;
 	private JComboBox<ModelCombo> cboxNumero;
 	private JTextField txtLimite;
+	private JDateChooser dtAtual;
 	
 	public static void main(String[] args) {
 		try {
@@ -131,10 +133,18 @@ public class CadEntrada extends JDialog {
 				txtValor.setText(""+dado);
 				
 			}
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				//refresh Combo
+				//Só mostra os quartos disponiveis
+				comboDao.AtualizaComboNum(cboxNumero, sdf.format( dtAtual.getDate() ));
+			}
 		});
 		cboxNumero.setBounds(10, 219, 76, 22);
 		panel.add(cboxNumero);
-		comboDao.AtualizaComboNum(cboxNumero, "quarto");
+		
+		
 		
 		JLabel lblNQuarto = new JLabel("N\u00BA QUARTO");
 		lblNQuarto.setBounds(10, 199, 76, 14);
@@ -180,7 +190,7 @@ public class CadEntrada extends JDialog {
 		label_5.setBounds(10, 245, 64, 14);
 		panel.add(label_5);
 		
-		final JDateChooser dtAtual = new JDateChooser();
+		dtAtual = new JDateChooser();
 		dtAtual.setBounds(10, 168, 87, 20);
 		panel.add(dtAtual);
 		
@@ -206,7 +216,7 @@ public class CadEntrada extends JDialog {
 		JLabel lblLimiteConsumo = new JLabel("LIMITE CONSUMO");
 		lblLimiteConsumo.setBounds(10, 291, 136, 14);
 		panel.add(lblLimiteConsumo);
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
 		
 		{
 			JPanel buttonPane = new JPanel();

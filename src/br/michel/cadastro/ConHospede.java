@@ -19,7 +19,6 @@ import br.michel.modelo.ModelHospede;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 
 public class ConHospede extends JDialog {
