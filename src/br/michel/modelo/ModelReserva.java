@@ -3,10 +3,22 @@ package br.michel.modelo;
 public class ModelReserva {
 
 	int idFunc, idNome, idTipo, Telefone; 
-	String Status, Requ, DataAtual, DataFinal;
+	String Status, Requ, DataAtual, DataFinal, NomeCli, NomeTipo;
 	
 	
 	
+	public String getNomeCli() {
+		return NomeCli;
+	}
+	public void setNomeCli(String nomeCli) {
+		NomeCli = nomeCli;
+	}
+	public String getNomeTipo() {
+		return NomeTipo;
+	}
+	public void setNomeTipo(String nomeTipo) {
+		NomeTipo = nomeTipo;
+	}
 	public int getTelefone() {
 		return Telefone;
 	}

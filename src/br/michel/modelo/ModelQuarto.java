@@ -2,11 +2,18 @@ package br.michel.modelo;
 
 public class ModelQuarto {
 
-	String Status, Num, NomeTipo;
+	String Status, Num, NomeTipo, Valor;
 	int IdTipo, Id;
 
 	
 	
+	
+	public String getValor() {
+		return Valor;
+	}
+	public void setValor(String valor) {
+		Valor = valor;
+	}
 	public String getNomeTipo() {
 		return NomeTipo;
 	}

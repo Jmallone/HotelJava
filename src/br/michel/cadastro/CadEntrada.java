@@ -79,6 +79,7 @@ public class CadEntrada extends JDialog {
 		contentPanel.add(panel);
 		
 		final JComboBox<ModelCombo> cboxNome = new JComboBox<ModelCombo>();
+		cboxNome.setEditable(true);
 		cboxNome.setBounds(10, 69, 136, 22);
 		panel.add(cboxNome);
 		//Refresh ComboBox

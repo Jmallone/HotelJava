@@ -56,7 +56,7 @@ public class QuartoDao {
 		
 		for (ModelQuarto modelQuarto : quarto) {
 			
-			model.addRow( new Object[]{modelQuarto.getId(), modelQuarto.getNum(), modelQuarto.getNomeTipo()});
+			model.addRow( new Object[]{modelQuarto.getId(), modelQuarto.getNum(), modelQuarto.getNomeTipo(),modelQuarto.getValor(), modelQuarto.getIdTipo()});
 			
 		}
 		
@@ -68,7 +68,7 @@ public class QuartoDao {
 	    	 List<ModelQuarto> quarto = new ArrayList<ModelQuarto>();
 	    	 if (consulta == "ON"){
 	    		 
-	    	 		sql = "select idQuarto, Numero_Quarto, tipoQuarto.Nome from quarto "
+	    	 		sql = "select idQuarto, Numero_Quarto, tipoQuarto.Nome, tipoQuarto.valor, TipoQuarto_idTipo from quarto "
 							+ "LEFt JOIN TipoQuarto ON TipoQuarto_idTipo = idtipoquarto "
 							+ "where Numero_Quarto not in "
 							+ "(SELECT quarto.Numero_Quarto FROM caqui.hospedagem  "
@@ -79,14 +79,14 @@ public class QuartoDao {
 	    	 		
 	    	 }else if (consulta == "OFF"){
 	    	 		
-	    		 sql = "SELECT idQuarto, quarto.Numero_Quarto, tipoQuarto.Nome FROM caqui.hospedagem  "
-							+ "LEFt JOIN Quarto ON Quarto_idQuarto = idQuarto  "
+	    		 sql = "SELECT idQuarto, quarto.Numero_Quarto, tipoQuarto.Nome,hospede.Nome, tipoQuarto.valor, TipoQuarto_idTipo FROM caqui.hospedagem  "
+	    				 	+ "LEFt JOIN hospede ON Hospede_idHospede = idHospede "
+							+ "LEFt JOIN Quarto ON Quarto_idQuarto = idQuarto "
 							+ "LEFt JOIN TipoQuarto ON TipoQuarto_idTipo = idtipoquarto "
 							+ "WHERE hospedagem.Data_Entrada like '"+dado+"' "
 							+ "and hospedagem.status like 'Hospedado'";
-	    		 
+	    		 			
 	    	 }
-	        
 			PreparedStatement stmt = Con.Conecta().prepareStatement(sql); 
 			
 	    	 ResultSet rs = stmt.executeQuery();
@@ -99,7 +99,8 @@ public class QuartoDao {
 	        	 tipo.setId(rs.getInt("idQuarto"));
 	             tipo.setNum(rs.getString("Numero_Quarto"));
 	             tipo.setNomeTipo(rs.getString("Nome"));
-
+	             tipo.setIdTipo(rs.getInt("TipoQuarto_idTipo"));
+	             tipo.setValor(rs.getString("tipoQuarto.valor"));
 	             // adicionando o objeto à lista
 	             quarto.add(tipo);
 	         }

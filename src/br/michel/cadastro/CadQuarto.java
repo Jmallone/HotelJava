@@ -65,7 +65,7 @@ public class CadQuarto extends JDialog {
 		panel.setBounds(10, 11, 188, 151);
 		contentPanel.add(panel);
 		
-		//TODO: Mudar Status para um ComboBox 'Aguardando, Finalizado, Cancelado'
+		
 		JLabel label = new JLabel("STATUS");
 		label.setBounds(10, 11, 85, 14);
 		panel.add(label);

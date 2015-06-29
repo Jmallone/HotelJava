@@ -13,7 +13,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import br.michel.dao.QuartoDao;
+import br.michel.dao.ReservaDao;
+import br.michel.modelo.ModelReserva;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -22,33 +23,30 @@ import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import javax.swing.JRadioButton;
-import javax.swing.JLabel;
-
-public class ConQuarto extends JDialog {
+public class ConReserva extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	private final JPanel contentPanel = new JPanel();
-	
+
     final static DefaultTableModel modelo = new DefaultTableModel();
     
     static JTable tabela = new JTable(modelo);
     
-	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    QuartoDao quartoDao = new QuartoDao();
+    ReservaDao reservaDao = new ReservaDao();
+    ModelReserva modelReserva = new ModelReserva();
     
+    final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     
     private JDateChooser dtData;
-    private JRadioButton rbttDisponivel;
-    private JRadioButton rbttOcupado;
+    
+    
     
 	public static void main(String[] args) {
 		try {
-			ConQuarto dialog = new ConQuarto();
+			ConReserva dialog = new ConReserva();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,39 +57,43 @@ public class ConQuarto extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ConQuarto() {
-		setTitle("Consultas de Quartos");
-		setBounds(100, 100, 641, 429);
+	public ConReserva() {
+		setTitle("Consulta Reserva");
+		setBounds(100, 100, 639, 442);
 		contentPanel.setBounds(0, 0, 0, 0);
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		
-		
 		modelo.addColumn("ID");
-	    modelo.addColumn("Num do Quarto");
+	    modelo.addColumn("Nome");
 	    modelo.addColumn("Tipo");
-	    modelo.addColumn("Valor");
-	    modelo.addColumn("id_tipo");
-	    
+	    modelo.addColumn("Status");
+	    modelo.addColumn("Telefone");
+	    modelo.addColumn("ID_grupo");
 	   
 	   tabela.getColumnModel().getColumn(0).setPreferredWidth(0); 
 		tabela.getColumnModel().getColumn(0).setMinWidth(0);
 		tabela.getColumnModel().getColumn(0).setMaxWidth(0);
 		tabela.getColumnModel().getColumn(0).setWidth(0); 
 		
-	   tabela.getColumnModel().getColumn(1).setPreferredWidth(150); 
-	   tabela.getColumnModel().getColumn(2).setPreferredWidth(460);
-	   tabela.getColumnModel().getColumn(3).setPreferredWidth(150);
+	   tabela.getColumnModel().getColumn(1).setPreferredWidth(450); 
+	   tabela.getColumnModel().getColumn(2).setPreferredWidth(260); 
+	   tabela.getColumnModel().getColumn(3).setPreferredWidth(100);
 	   
-	   tabela.getColumnModel().getColumn(4).setPreferredWidth(0); 
-		tabela.getColumnModel().getColumn(4).setMinWidth(0);
-		tabela.getColumnModel().getColumn(4).setMaxWidth(0);
-		tabela.getColumnModel().getColumn(0).setWidth(0); 
+	   tabela.getColumnModel().getColumn(4).setPreferredWidth(300);
+	   
+	   tabela.getColumnModel().getColumn(5).setPreferredWidth(0); 
+		tabela.getColumnModel().getColumn(5).setMinWidth(0);
+		tabela.getColumnModel().getColumn(5).setMaxWidth(0);
+		tabela.getColumnModel().getColumn(5).setWidth(0); 
 	   
 	   tabela.setPreferredScrollableViewportSize(new Dimension(350, 50));
 	    
 	   tabela.setPreferredScrollableViewportSize(new Dimension(350, 50));
+	   
+
+	
 
 	   Container c = getContentPane();
 	   getContentPane().setLayout(null);
@@ -102,7 +104,7 @@ public class ConQuarto extends JDialog {
 	   getContentPane().setLayout(null);
 					
 	   final JScrollPane scrollPane = new JScrollPane(tabela);
-	   scrollPane.setBounds(10, 136, 504, 219);
+	   scrollPane.setBounds(10, 94, 597, 219);
 	   c.add(scrollPane);
 		
 		
@@ -126,62 +128,55 @@ public class ConQuarto extends JDialog {
 		}
 		
 		dtData = new JDateChooser();
-		dtData.setBounds(10, 44, 122, 20);
+		dtData.setBounds(10, 42, 90, 20);
 		getContentPane().add(dtData);
 		
-		JButton btnOk = new JButton("OK");
+		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				quartoDao.deletaTable(tabela, modelo);
-				
-				if(rbttDisponivel.isSelected())
-				{
-					quartoDao.populaTable(modelo, sdf.format( dtData.getDate() ), "ON");
-				}
-				
-				if(rbttOcupado.isSelected())
-				{
-					quartoDao.populaTable(modelo, sdf.format( dtData.getDate() ), "OFF");
-				}
-
-				
+			public void actionPerformed(ActionEvent e) {
+				//refresh table 
+				reservaDao.deletaTable(tabela, modelo);
+				reservaDao.populaTable(modelo, sdf.format( dtData.getDate() ));
 			}
 		});
-		btnOk.setBounds(142, 44, 89, 23);
+		btnOk.setBounds(110, 42, 89, 23);
 		getContentPane().add(btnOk);
 		
-		rbttDisponivel = new JRadioButton("Quartos Disponiveis");
-		rbttDisponivel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				rbttOcupado.setSelected( false );
-			}
-		});
-		rbttDisponivel.setBounds(6, 71, 171, 23);
-		getContentPane().add(rbttDisponivel);
-		
-		rbttOcupado = new JRadioButton("Quartos Ocupados");
-		rbttOcupado.addActionListener(new ActionListener() {
+		JButton btnCancelarReserva = new JButton("Cancelar Reserva");
+		btnCancelarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rbttDisponivel.setSelected( false );
+				
+				modelReserva.setIdNome((Integer) tabela.getValueAt(tabela.getSelectedRow(),0));
+				
+				reservaDao.cancelarReserva(modelReserva, "Cancelado");
+				
+				reservaDao.deletaTable(tabela, modelo);
+				reservaDao.populaTable(modelo, sdf.format( dtData.getDate() ));
+				
 			}
 		});
-		rbttOcupado.setBounds(6, 97, 142, 23);
-		getContentPane().add(rbttOcupado);
+		btnCancelarReserva.setBounds(10, 324, 178, 23);
+		getContentPane().add(btnCancelarReserva);
 		
-		JLabel lblEscolhaUmaData = new JLabel("ESCOLHA UMA DATA :");
-		lblEscolhaUmaData.setBounds(10, 24, 207, 14);
-		getContentPane().add(lblEscolhaUmaData);
-		
-		JButton btnVerHospede = new JButton("Editar Quarto");
-		btnVerHospede.addActionListener(new ActionListener() {
+		JButton btnNewButton = new JButton("Hospedar");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int  dado = (Integer) tabela.getValueAt(tabela.getSelectedRow(),0);
-				System.out.println("DADO: "+tabela.getValueAt(tabela.getSelectedRow(),0)+"DadO2 :"+(Integer) tabela.getValueAt(tabela.getSelectedRow(),4));
-
+				
+				modelReserva.setIdNome((Integer) tabela.getValueAt(tabela.getSelectedRow(),0));
+				
+				reservaDao.cancelarReserva(modelReserva, "Hospedado");
+				
+				reservaDao.deletaTable(tabela, modelo);
+				reservaDao.populaTable(modelo, sdf.format( dtData.getDate() ));
+				
+				CadEntrada cadEntrada = new CadEntrada();
+				cadEntrada.setModal(true);
+				cadEntrada.setVisible(true);
+				
+				
 			}
 		});
-		btnVerHospede.setBounds(172, 101, 158, 23);
-		getContentPane().add(btnVerHospede);
+		btnNewButton.setBounds(243, 324, 137, 23);
+		getContentPane().add(btnNewButton);
 	}
 }

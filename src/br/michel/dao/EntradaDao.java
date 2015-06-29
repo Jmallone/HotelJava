@@ -31,9 +31,8 @@ public class EntradaDao {
 			stmt.setLong(7, ModelEntrada.getIdNome());
 			stmt.setLong(8, ModelEntrada.getIdNum());
 			
-			//TODO: Arrumar esse negocio de reserva tirar la pra ser nulo
 			//stmt.setLong(9, ModelEntrada.getIdReserva());
-			stmt.setLong(9, 2);
+			stmt.setInt(9, 1);
 		
 			//execute and close
 			stmt.execute();

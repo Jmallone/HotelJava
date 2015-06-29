@@ -71,8 +71,8 @@ public class CadSaida extends JDialog {
 		dtDataAtual.setBounds(10, 36, 100, 20);
 		contentPanel.add(dtDataAtual);
 		
-		JLabel lblSelecionarData = new JLabel("SELECIONAR DATA");
-		lblSelecionarData.setBounds(10, 11, 137, 14);
+		JLabel lblSelecionarData = new JLabel("SELECIONAR DATA DE SAIDA");
+		lblSelecionarData.setBounds(10, 11, 192, 14);
 		contentPanel.add(lblSelecionarData);
 		
 		cboxHospede = new JComboBox<ModelCombo>();
@@ -80,7 +80,7 @@ public class CadSaida extends JDialog {
 		contentPanel.add(cboxHospede);
 		
 		JLabel lblNomeDoHospede = new JLabel("NOME DO HOSPEDE");
-		lblNomeDoHospede.setBounds(177, 11, 202, 14);
+		lblNomeDoHospede.setBounds(212, 11, 202, 14);
 		contentPanel.add(lblNomeDoHospede);
 		
 		dtSaida = new JDateChooser();
